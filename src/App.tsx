@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { runes, getRandomRune, Rune } from './data/runes';
 import { BookOpen, Sparkles } from 'lucide-react';
 
@@ -10,9 +10,23 @@ function App() {
   const [runeCount, setRuneCount] = useState<'one' | 'two' | 'three' | 'five'>('one');
   const [isPulling, setIsPulling] = useState(false);
 
+  const runeDrawingContainerRef = useRef<HTMLDivElement>(null);
+  const singleRuneResultRef = useRef<HTMLDivElement>(null);
+  const multipleRunesResultRef = useRef<HTMLDivElement>(null);
+
+  const scrollToContainer = (ref: React.RefObject<HTMLDivElement>) => {
+    setTimeout(() => {
+      if (ref.current) {
+        ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
+  };
+
   const pullDailyRune = () => {
     const newRune = getRandomRune();
     setDailyRune(newRune);
+    // Scroll to the single rune result container
+    scrollToContainer(singleRuneResultRef);
   };
 
   const pullMultipleRunes = () => {
@@ -35,12 +49,16 @@ function App() {
     
     setSelectedRunes(newRunes);
     setIsPulling(false);
+    // Scroll to the multiple runes result container
+    scrollToContainer(multipleRunesResultRef);
   };
 
   const revealNextRune = () => {
     if (revealedRunes.length < selectedRunes.length) {
       const nextRune = selectedRunes[revealedRunes.length];
       setRevealedRunes(prev => [...prev, nextRune]);
+      // Scroll to the multiple runes container after revealing
+      scrollToContainer(multipleRunesResultRef);
     }
   };
 
@@ -48,6 +66,21 @@ function App() {
     setSelectedRunes([]);
     setRevealedRunes([]);
     setDailyRune(null);
+  };
+
+  // Scroll to multiple runes container when it appears or changes
+  useEffect(() => {
+    if (selectedRunes.length > 0 && !dailyRune) {
+      scrollToContainer(multipleRunesResultRef);
+    }
+  }, [selectedRunes, dailyRune]);
+
+  const handleTabChange = (tab: 'dictionary' | 'daily') => {
+    setActiveTab(tab);
+    if (tab === 'daily') {
+      // Scroll to the rune drawing container
+      scrollToContainer(runeDrawingContainerRef);
+    }
   };
 
   return (
@@ -60,14 +93,14 @@ function App() {
       <nav className="nav-tabs">
         <button
           className={`nav-tab ${activeTab === 'dictionary' ? 'active' : ''}`}
-          onClick={() => setActiveTab('dictionary')}
+          onClick={() => handleTabChange('dictionary')}
         >
           <BookOpen size={20} style={{ marginRight: '8px', verticalAlign: 'middle' }} />
           Rune Dictionary
         </button>
         <button
           className={`nav-tab ${activeTab === 'daily' ? 'active' : ''}`}
-          onClick={() => setActiveTab('daily')}
+          onClick={() => handleTabChange('daily')}
         >
           <Sparkles size={20} style={{ marginRight: '8px', verticalAlign: 'middle' }} />
           Pull a Rune
@@ -92,7 +125,7 @@ function App() {
       {activeTab === 'daily' && (
         <div>
           {!dailyRune && selectedRunes.length === 0 ? (
-            <div className="rune-card" style={{ maxWidth: '600px', margin: '0 auto' }}>
+            <div ref={runeDrawingContainerRef} className="rune-card" style={{ maxWidth: '600px', margin: '0 auto' }}>
               <div style={{ marginBottom: '2rem' }}>
                 <img src="/huginmunin1.png" alt="Hugin and Munin" style={{ maxWidth: '300px', height: 'auto' }} />
               </div>
@@ -155,7 +188,7 @@ function App() {
               </button>
             </div>
           ) : dailyRune ? (
-            <div className="rune-card" style={{ maxWidth: '600px', margin: '0 auto' }}>
+            <div ref={singleRuneResultRef} className="rune-card" style={{ maxWidth: '600px', margin: '0 auto' }}>
               <h2>Your Rune</h2>
               <span className="rune-symbol">{dailyRune.symbol}</span>
               <h3 className="rune-name">{dailyRune.name}</h3>
@@ -215,7 +248,7 @@ function App() {
               </button>
             </div>
           ) : (
-            <div className="rune-card" style={{ maxWidth: '600px', margin: '0 auto' }}>
+            <div ref={multipleRunesResultRef} className="rune-card" style={{ maxWidth: '600px', margin: '0 auto' }}>
               <h2>Your {runeCount === 'two' ? 'Two' : runeCount === 'three' ? 'Three' : 'Five'} Runes</h2>
               
               <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '2rem', flexWrap: 'wrap' }}>
