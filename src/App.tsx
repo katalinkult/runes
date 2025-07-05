@@ -445,7 +445,8 @@ function App() {
                     <span className="rune-symbol" style={{ 
                       fontSize: '2.5rem', 
                       color: '#e8f4fd',
-                      textShadow: '0 0 10px rgba(99, 179, 237, 0.5)'
+                      textShadow: '0 0 10px rgba(99, 179, 237, 0.5)',
+                      marginTop: '0.75rem'
                     }}>
                       {rune.symbol}
                     </span>
