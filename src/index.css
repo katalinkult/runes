@@ -1,0 +1,388 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+
+:root {
+  font-family: 'Crimson Text', serif;
+  line-height: 1.6;
+  font-weight: 400;
+  color-scheme: dark;
+  color: #e8f4fd;
+  background: #0a0a0a;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(ellipse at center, #1a1a1a 0%, #0a0a0a 70%, #050505 100%);
+  color: #e8f4fd;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(120, 150, 200, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(120, 150, 200, 0.02) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(120, 150, 200, 0.01) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 2;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  width: 100%;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 4rem;
+  position: relative;
+}
+
+.header h1 {
+  font-family: 'Cinzel', serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #e8f4fd;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  text-shadow: 
+    0 0 10px rgba(232, 244, 253, 0.5),
+    0 0 20px rgba(232, 244, 253, 0.3),
+    0 0 30px rgba(232, 244, 253, 0.1);
+  animation: glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 
+      0 0 10px rgba(232, 244, 253, 0.5),
+      0 0 20px rgba(232, 244, 253, 0.3),
+      0 0 30px rgba(232, 244, 253, 0.1);
+  }
+  to {
+    text-shadow: 
+      0 0 15px rgba(232, 244, 253, 0.7),
+      0 0 25px rgba(232, 244, 253, 0.4),
+      0 0 35px rgba(232, 244, 253, 0.2);
+  }
+}
+
+.header p {
+  font-family: 'Crimson Text', serif;
+  font-size: 1.3rem;
+  opacity: 0.8;
+  max-width: 600px;
+  margin: 0 auto;
+  font-style: italic;
+  letter-spacing: 0.1em;
+  color: #b8d4e6;
+}
+
+.nav-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.nav-tab {
+  font-family: 'Cinzel', serif;
+  padding: 1rem 2rem;
+  background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+  border: 2px solid #3a3a3a;
+  border-radius: 8px;
+  color: #e8f4fd;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.4s ease;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.nav-tab::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(232, 244, 253, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.nav-tab:hover::before {
+  left: 100%;
+}
+
+.nav-tab:hover,
+.nav-tab.active {
+  background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
+  border-color: #4a4a4a;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 
+    0 6px 12px rgba(0, 0, 0, 0.4),
+    0 0 15px rgba(232, 244, 253, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  text-shadow: 0 0 8px rgba(232, 244, 253, 0.5);
+}
+
+.nav-tab svg {
+  margin-right: 0.5rem;
+  opacity: 0.8;
+}
+
+.rune-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2.5rem;
+  margin-bottom: 3rem;
+}
+
+.rune-card {
+  background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+  border: 2px solid #2a2a2a;
+  border-radius: 12px;
+  padding: 2.5rem;
+  text-align: center;
+  transition: all 0.4s ease;
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.rune-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(232, 244, 253, 0.3), transparent);
+}
+
+.rune-card:hover {
+  transform: translateY(-5px);
+  border-color: #3a3a3a;
+  box-shadow: 
+    0 8px 16px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(232, 244, 253, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.rune-symbol {
+  font-size: 4.5rem;
+  margin-bottom: 1.5rem;
+  display: block;
+  font-weight: bold;
+  color: #e8f4fd;
+  text-shadow: 
+    0 0 10px rgba(232, 244, 253, 0.5),
+    0 0 20px rgba(232, 244, 253, 0.3);
+  font-family: 'Cinzel', serif;
+}
+
+.rune-name {
+  font-family: 'Cinzel', serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-shadow: 0 0 8px rgba(232, 244, 253, 0.3);
+}
+
+.rune-meaning {
+  font-family: 'Crimson Text', serif;
+  font-size: 1.1rem;
+  opacity: 0.9;
+  line-height: 1.7;
+  color: #b8d4e6;
+  margin-bottom: 1rem;
+}
+
+.rune-meaning strong {
+  color: #e8f4fd;
+  font-weight: 600;
+}
+
+.daily-rune {
+  text-align: center;
+  background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+  border: 3px solid #3a3a3a;
+  border-radius: 16px;
+  padding: 4rem;
+  margin: 2rem auto;
+  max-width: 700px;
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 8px 16px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.daily-rune::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(232, 244, 253, 0.4), transparent);
+}
+
+.daily-rune h2 {
+  font-family: 'Cinzel', serif;
+  font-size: 2.8rem;
+  margin-bottom: 2.5rem;
+  color: #e8f4fd;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  text-shadow: 
+    0 0 15px rgba(232, 244, 253, 0.5),
+    0 0 25px rgba(232, 244, 253, 0.3);
+}
+
+.daily-rune .rune-symbol {
+  font-size: 9rem;
+  margin-bottom: 2.5rem;
+  text-shadow: 
+    0 0 20px rgba(232, 244, 253, 0.6),
+    0 0 30px rgba(232, 244, 253, 0.4);
+}
+
+.daily-rune .rune-name {
+  font-size: 2.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.daily-rune .rune-meaning {
+  font-size: 1.3rem;
+  line-height: 1.8;
+}
+
+.pull-button {
+  font-family: 'Cinzel', serif;
+  background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+  color: #e8f4fd;
+  border: 2px solid #3a3a3a;
+  padding: 1.2rem 2.5rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  margin: 2.5rem auto;
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.pull-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(232, 244, 253, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.pull-button:hover::before {
+  left: 100%;
+}
+
+.pull-button:hover {
+  background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
+  border-color: #4a4a4a;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 
+    0 6px 12px rgba(0, 0, 0, 0.4),
+    0 0 15px rgba(232, 244, 253, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  text-shadow: 0 0 8px rgba(232, 244, 253, 0.5);
+}
+
+.pull-button:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 2rem 1rem;
+  }
+  
+  .header h1 {
+    font-size: 2.5rem;
+    letter-spacing: 0.2em;
+  }
+  
+  .nav-tabs {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .rune-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .daily-rune {
+    padding: 3rem 2rem;
+  }
+  
+  .daily-rune .rune-symbol {
+    font-size: 7rem;
+  }
+  
+  .daily-rune h2 {
+    font-size: 2.2rem;
+  }
+} 
