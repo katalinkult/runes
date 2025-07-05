@@ -86,8 +86,12 @@ function App() {
   return (
     <div className="container">
       <header className="header">
-        <h1>Elder Futhark Runes</h1>
-        <p>The ancient wisdom of the 24 runes that guide our lives</p>
+        <h1 style={{ fontSize: activeTab === 'daily' ? '1.5rem' : '2.5rem' }}>
+          Elder Futhark Runes
+        </h1>
+        {activeTab === 'dictionary' && (
+          <p>The ancient wisdom of the 24 runes that guide our lives</p>
+        )}
       </header>
 
       <nav className="nav-tabs">
