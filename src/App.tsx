@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { runes, getRandomRune, Rune } from './data/runes';
-import { BookOpen, Sparkles } from 'lucide-react';
+import { BookOpen, Sparkles, Search } from 'lucide-react';
 
 function App() {
-  const [activeTab, setActiveTab] = useState<'dictionary' | 'daily'>('dictionary');
+  const [activeTab, setActiveTab] = useState<'dictionary' | 'daily' | 'lookup'>('dictionary');
   const [dailyRune, setDailyRune] = useState<Rune | null>(null);
   const [selectedRunes, setSelectedRunes] = useState<Rune[]>([]);
   const [revealedRunes, setRevealedRunes] = useState<Rune[]>([]);
   const [runeCount, setRuneCount] = useState<'one' | 'two' | 'three' | 'five'>('one');
   const [isPulling, setIsPulling] = useState(false);
+  const [selectedLookupRune, setSelectedLookupRune] = useState<Rune | null>(null);
 
   const runeDrawingContainerRef = useRef<HTMLDivElement>(null);
   const singleRuneResultRef = useRef<HTMLDivElement>(null);
@@ -75,12 +76,21 @@ function App() {
     }
   }, [selectedRunes, dailyRune]);
 
-  const handleTabChange = (tab: 'dictionary' | 'daily') => {
+  const handleTabChange = (tab: 'dictionary' | 'daily' | 'lookup') => {
     setActiveTab(tab);
+    setSelectedLookupRune(null);
     if (tab === 'daily') {
       // Scroll to the rune drawing container
       scrollToContainer(runeDrawingContainerRef);
     }
+  };
+
+  const handleRuneClick = (rune: Rune) => {
+    setSelectedLookupRune(rune);
+  };
+
+  const closeLookupRune = () => {
+    setSelectedLookupRune(null);
   };
 
   return (
@@ -108,6 +118,13 @@ function App() {
         >
           <Sparkles size={20} style={{ marginRight: '8px', verticalAlign: 'middle' }} />
           Pull a Rune
+        </button>
+        <button
+          className={`nav-tab ${activeTab === 'lookup' ? 'active' : ''}`}
+          onClick={() => handleTabChange('lookup')}
+        >
+          <Search size={20} style={{ marginRight: '8px', verticalAlign: 'middle' }} />
+          Look up a Rune
         </button>
       </nav>
 
@@ -344,6 +361,97 @@ function App() {
                   </button>
                 </>
               )}
+            </div>
+          )}
+        </div>
+      )}
+
+      {activeTab === 'lookup' && (
+        <div>
+          {selectedLookupRune ? (
+            <div className="rune-card" style={{ maxWidth: '600px', margin: '0 auto' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+                <h2 style={{ margin: 0 }}>{selectedLookupRune.name}</h2>
+                <button 
+                  onClick={closeLookupRune}
+                  style={{
+                    background: 'linear-gradient(145deg, #2a2a2a, #1a1a1a)',
+                    color: '#e8f4fd',
+                    border: '2px solid #3a3a3a',
+                    borderRadius: '8px',
+                    padding: '0.5rem 1rem',
+                    fontSize: '0.9rem',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'linear-gradient(145deg, #3a3a3a, #2a2a2a)';
+                    e.currentTarget.style.borderColor = '#4a5568';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'linear-gradient(145deg, #2a2a2a, #1a1a1a)';
+                    e.currentTarget.style.borderColor = '#3a3a3a';
+                  }}
+                >
+                  ← Back to Grid
+                </button>
+              </div>
+              <span className="rune-symbol" style={{ fontSize: '4rem', display: 'block', textAlign: 'center', marginBottom: '1rem' }}>
+                {selectedLookupRune.symbol}
+              </span>
+              <h3 className="rune-name" style={{ textAlign: 'center', marginBottom: '1rem' }}>
+                {selectedLookupRune.name}
+              </h3>
+              <p className="rune-meaning" style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+                <strong>{selectedLookupRune.meaning}</strong>
+              </p>
+              <p className="rune-meaning">{selectedLookupRune.description}</p>
+            </div>
+          ) : (
+            <div>
+              <p style={{ textAlign: 'center', marginBottom: '2rem', fontSize: '1.2rem', color: '#b8d4e6' }}>
+                Click on any rune to see its detailed meaning and description
+              </p>
+              <div className="rune-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(80px, 1fr))', gap: '1rem', maxWidth: '800px', margin: '0 auto' }}>
+                {runes.map((rune) => (
+                  <div 
+                    key={rune.id} 
+                    onClick={() => handleRuneClick(rune)}
+                    style={{ 
+                      cursor: 'pointer', 
+                      transition: 'all 0.3s ease',
+                      background: 'linear-gradient(145deg, #3a3a3a, #2a2a2a)',
+                      border: '2px solid #4a5568',
+                      borderRadius: '12px',
+                      padding: '1rem',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      minHeight: '80px',
+                      boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)',
+                      position: 'relative'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-5px) scale(1.05)';
+                      e.currentTarget.style.boxShadow = '0 10px 25px rgba(99, 179, 237, 0.3)';
+                      e.currentTarget.style.borderColor = '#63b3ed';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                      e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.3)';
+                      e.currentTarget.style.borderColor = '#4a5568';
+                    }}
+                  >
+                    <span className="rune-symbol" style={{ 
+                      fontSize: '2.5rem', 
+                      color: '#e8f4fd',
+                      textShadow: '0 0 10px rgba(99, 179, 237, 0.5)'
+                    }}>
+                      {rune.symbol}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
         </div>
