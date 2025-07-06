@@ -95,38 +95,37 @@ function App() {
 
   return (
     <div className="container">
-      <header className="header">
-        <h1 style={{ fontSize: activeTab === 'daily' ? '1.5rem' : '2.5rem' }}>
-          Elder Futhark Runes
-        </h1>
-        {activeTab === 'dictionary' && (
-          <p>The ancient marks carved in tree, stone, and bone</p>
-        )}
-      </header>
-
-      <nav className="nav-tabs">
-        <button
-          className={`nav-tab ${activeTab === 'dictionary' ? 'active' : ''}`}
-          onClick={() => handleTabChange('dictionary')}
-        >
-          <BookOpen size={20} style={{ marginRight: '8px', verticalAlign: 'middle' }} />
-          Rune Dictionary
-        </button>
-        <button
-          className={`nav-tab ${activeTab === 'daily' ? 'active' : ''}`}
-          onClick={() => handleTabChange('daily')}
-        >
-          <Sparkles size={20} style={{ marginRight: '8px', verticalAlign: 'middle' }} />
-          Pull a Rune
-        </button>
-        <button
-          className={`nav-tab ${activeTab === 'lookup' ? 'active' : ''}`}
-          onClick={() => handleTabChange('lookup')}
-        >
-          <Search size={20} style={{ marginRight: '8px', verticalAlign: 'middle' }} />
-          Look up a Rune
-        </button>
-      </nav>
+      <div className="top-band">
+        <div className="top-band-content">
+          <h1 className="app-title">Elder Futhark Runes</h1>
+          
+          <nav className="top-nav">
+            <button
+              className={`nav-button ${activeTab === 'dictionary' ? 'active' : ''}`}
+              onClick={() => handleTabChange('dictionary')}
+            >
+              <BookOpen size={18} />
+              <span>Dictionary</span>
+            </button>
+            
+            <button
+              className={`nav-button ${activeTab === 'daily' ? 'active' : ''}`}
+              onClick={() => handleTabChange('daily')}
+            >
+              <Sparkles size={18} />
+              <span>Pull a Rune</span>
+            </button>
+            
+            <button
+              className={`nav-button ${activeTab === 'lookup' ? 'active' : ''}`}
+              onClick={() => handleTabChange('lookup')}
+            >
+              <Search size={18} />
+              <span>Look up a Rune</span>
+            </button>
+          </nav>
+        </div>
+      </div>
 
       {activeTab === 'dictionary' && (
         <div className="rune-grid">
