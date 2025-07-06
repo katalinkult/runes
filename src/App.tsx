@@ -100,7 +100,7 @@ function App() {
           Elder Futhark Runes
         </h1>
         {activeTab === 'dictionary' && (
-          <p>The ancient wisdom of the 24 runes that guide our lives</p>
+          <p>The ancient marks carved in tree, stone, and bone</p>
         )}
       </header>
 
