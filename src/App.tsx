@@ -3,7 +3,7 @@ import { runes, getRandomRune, Rune } from './data/runes';
 import { BookOpen, Sparkles, Search } from 'lucide-react';
 
 function App() {
-  const [activeTab, setActiveTab] = useState<'dictionary' | 'daily' | 'lookup'>('dictionary');
+  const [activeTab, setActiveTab] = useState<'dictionary' | 'daily' | 'lookup' | 'bindrunes'>('dictionary');
   const [dailyRune, setDailyRune] = useState<Rune | null>(null);
   const [selectedRunes, setSelectedRunes] = useState<Rune[]>([]);
   const [revealedRunes, setRevealedRunes] = useState<Rune[]>([]);
@@ -76,7 +76,7 @@ function App() {
     }
   }, [selectedRunes, dailyRune]);
 
-  const handleTabChange = (tab: 'dictionary' | 'daily' | 'lookup') => {
+  const handleTabChange = (tab: 'dictionary' | 'daily' | 'lookup' | 'bindrunes') => {
     setActiveTab(tab);
     setSelectedLookupRune(null);
     if (tab === 'daily') {
@@ -122,6 +122,14 @@ function App() {
             >
               <Search size={18} />
               <span>Look up a Rune</span>
+            </button>
+            
+            <button
+              className={`nav-button ${activeTab === 'bindrunes' ? 'active' : ''}`}
+              onClick={() => handleTabChange('bindrunes')}
+            >
+              <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>ᛒ</span>
+              <span>Bindrunes</span>
             </button>
           </nav>
         </div>
@@ -454,6 +462,76 @@ function App() {
               </div>
             </div>
           )}
+        </div>
+      )}
+
+      {activeTab === 'bindrunes' && (
+        <div>
+          <div className="rune-card" style={{ maxWidth: '800px', margin: '0 auto' }}>
+            <h2 style={{ textAlign: 'center', marginBottom: '2rem' }}>Bindrunes</h2>
+            
+            <p className="rune-meaning" style={{ marginBottom: '2rem', textAlign: 'center' }}>
+              <strong>Bindrunes</strong> are combinations of two or more runes merged into a single symbol. 
+              They were used to create powerful magical symbols that combined the meanings and energies of multiple runes.
+            </p>
+            
+            <div style={{ marginBottom: '2rem' }}>
+              <h3 style={{ color: '#e8f4fd', marginBottom: '1rem' }}>How Bindrunes Work</h3>
+              <p className="rune-meaning">
+                When creating a bindrune, runes are overlapped and shared lines are combined. 
+                This creates a unified symbol that represents the combined intent and power of the individual runes. 
+                The most common bindrunes combine 2-3 runes, though more complex combinations exist.
+              </p>
+            </div>
+            
+            <div style={{ marginBottom: '2rem' }}>
+              <h3 style={{ color: '#e8f4fd', marginBottom: '1rem' }}>Creating Your Own Bindrune</h3>
+              <p className="rune-meaning">
+                To create a bindrune, first identify the runes whose meanings align with your intention. 
+                Then, sketch how they might overlap and share lines. The goal is to create a harmonious, 
+                balanced symbol that flows naturally while maintaining the recognizable elements of each rune.
+              </p>
+            </div>
+            
+            <div style={{ marginBottom: '2rem' }}>
+              <h3 style={{ color: '#e8f4fd', marginBottom: '1rem' }}>Common Bindrune Examples</h3>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem', marginTop: '1rem' }}>
+                <div style={{ textAlign: 'center', padding: '1rem', background: 'linear-gradient(145deg, #2a2a2a, #1a1a1a)', borderRadius: '8px', border: '1px solid #3a3a3a' }}>
+                  <div style={{ fontSize: '3rem', marginBottom: '0.5rem', color: '#e8f4fd' }}>ᚠᚢ</div>
+                  <h4 style={{ color: '#e8f4fd', marginBottom: '0.5rem' }}>Fehu + Uruz</h4>
+                  <p style={{ fontSize: '0.9rem', color: '#b8d4e6' }}>Wealth + Strength</p>
+                </div>
+                
+                <div style={{ textAlign: 'center', padding: '1rem', background: 'linear-gradient(145deg, #2a2a2a, #1a1a1a)', borderRadius: '8px', border: '1px solid #3a3a3a' }}>
+                  <div style={{ fontSize: '3rem', marginBottom: '0.5rem', color: '#e8f4fd' }}>ᚦᚱ</div>
+                  <h4 style={{ color: '#e8f4fd', marginBottom: '0.5rem' }}>Thurisaz + Raidho</h4>
+                  <p style={{ fontSize: '0.9rem', color: '#b8d4e6' }}>Protection + Journey</p>
+                </div>
+                
+                <div style={{ textAlign: 'center', padding: '1rem', background: 'linear-gradient(145deg, #2a2a2a, #1a1a1a)', borderRadius: '8px', border: '1px solid #3a3a3a' }}>
+                  <div style={{ fontSize: '3rem', marginBottom: '0.5rem', color: '#e8f4fd' }}>ᚨᛗ</div>
+                  <h4 style={{ color: '#e8f4fd', marginBottom: '0.5rem' }}>Ansuz + Mannaz</h4>
+                  <p style={{ fontSize: '0.9rem', color: '#b8d4e6' }}>Wisdom + Humanity</p>
+                </div>
+              </div>
+            </div>
+            
+            <div style={{ marginBottom: '2rem' }}>
+              <h3 style={{ color: '#e8f4fd', marginBottom: '1rem' }}>Using Bindrunes</h3>
+              <p className="rune-meaning">
+                Bindrunes can be carved into wood, stone, or metal, drawn on paper, or visualized in meditation. 
+                They are often used for protection, healing, guidance, or to manifest specific intentions. 
+                The power of a bindrune comes from the focused intention and the harmonious combination of runic energies.
+              </p>
+            </div>
+            
+            <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+              <p className="rune-meaning" style={{ fontStyle: 'italic', opacity: 0.8 }}>
+                "When runes are bound together, their power multiplies. 
+                Choose wisely, for the bindrune becomes a living symbol of your intent."
+              </p>
+            </div>
+          </div>
         </div>
       )}
     </div>
