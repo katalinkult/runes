@@ -94,7 +94,7 @@ function App() {
   };
 
   return (
-    <div className="container">
+    <>
       <div className="top-band">
         <div className="top-band-content">
           <h1 className="app-title">Elder Futhark Runes</h1>
@@ -134,6 +134,8 @@ function App() {
           </nav>
         </div>
       </div>
+      
+      <div className="container">
 
       {activeTab === 'dictionary' && (
         <div className="rune-grid">
@@ -534,7 +536,8 @@ function App() {
           </div>
         </div>
       )}
-    </div>
+      </div>
+    </>
   );
 }
 
