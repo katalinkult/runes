@@ -146,17 +146,56 @@ function App() {
       <div className="container">
 
       {activeTab === 'dictionary' && (
-        <div className="rune-grid">
-          {runes.map((rune) => (
-            <div key={rune.id} className="rune-card">
-              <span className="rune-symbol">{rune.symbol}</span>
-              <h3 className="rune-name">{rune.name}</h3>
-              <p className="rune-meaning">
-                <strong>{rune.meaning}</strong>
-              </p>
-              <p className="rune-meaning">{rune.description}</p>
-            </div>
-          ))}
+        <div style={{ position: 'relative' }}>
+          <div className="rune-grid">
+            {runes.map((rune) => (
+              <div key={rune.id} className="rune-card">
+                <span className="rune-symbol">{rune.symbol}</span>
+                <h3 className="rune-name">{rune.name}</h3>
+                <p className="rune-meaning">
+                  <strong>{rune.meaning}</strong>
+                </p>
+                <p className="rune-meaning">{rune.description}</p>
+              </div>
+            ))}
+          </div>
+          
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            style={{
+              position: 'fixed',
+              bottom: '2rem',
+              right: '2rem',
+              background: 'linear-gradient(145deg, #2a2a2a, #1a1a1a)',
+              border: '2px solid #3a3a3a',
+              borderRadius: '50%',
+              width: '60px',
+              height: '60px',
+              color: '#e8f4fd',
+              fontSize: '1.5rem',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+              zIndex: 1000,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'linear-gradient(145deg, #3a3a3a, #2a2a2a)';
+              e.currentTarget.style.borderColor = '#4a5568';
+              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = '0 6px 16px rgba(0, 0, 0, 0.4), 0 0 15px rgba(232, 244, 253, 0.2)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'linear-gradient(145deg, #2a2a2a, #1a1a1a)';
+              e.currentTarget.style.borderColor = '#3a3a3a';
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.3)';
+            }}
+          >
+            ↑
+          </button>
         </div>
       )}
 
