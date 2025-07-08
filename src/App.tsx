@@ -101,19 +101,19 @@ function App() {
           
           <nav className="top-nav">
             <button
-              className={`nav-button ${activeTab === 'dictionary' ? 'active' : ''}`}
-              onClick={() => handleTabChange('dictionary')}
-            >
-              <BookOpen size={18} />
-              <span>Dictionary</span>
-            </button>
-            
-            <button
               className={`nav-button ${activeTab === 'daily' ? 'active' : ''}`}
               onClick={() => handleTabChange('daily')}
             >
               <Sparkles size={18} />
               <span>Pull a Rune</span>
+            </button>
+            
+            <button
+              className={`nav-button ${activeTab === 'dictionary' ? 'active' : ''}`}
+              onClick={() => handleTabChange('dictionary')}
+            >
+              <BookOpen size={18} />
+              <span>Dictionary</span>
             </button>
             
             <button
