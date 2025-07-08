@@ -3,7 +3,7 @@ import { runes, getRandomRune, Rune } from './data/runes';
 import { BookOpen, Sparkles, Search } from 'lucide-react';
 
 function App() {
-  const [activeTab, setActiveTab] = useState<'dictionary' | 'daily' | 'lookup' | 'bindrunes'>('dictionary');
+  const [activeTab, setActiveTab] = useState<'dictionary' | 'daily' | 'lookup' | 'bindrunes' | 'wyrd'>('dictionary');
   const [dailyRune, setDailyRune] = useState<Rune | null>(null);
   const [selectedRunes, setSelectedRunes] = useState<Rune[]>([]);
   const [revealedRunes, setRevealedRunes] = useState<Rune[]>([]);
@@ -76,7 +76,7 @@ function App() {
     }
   }, [selectedRunes, dailyRune]);
 
-  const handleTabChange = (tab: 'dictionary' | 'daily' | 'lookup' | 'bindrunes') => {
+  const handleTabChange = (tab: 'dictionary' | 'daily' | 'lookup' | 'bindrunes' | 'wyrd') => {
     setActiveTab(tab);
     setSelectedLookupRune(null);
     if (tab === 'daily') {
@@ -130,6 +130,14 @@ function App() {
             >
               <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>ᛒ</span>
               <span>Bindrunes</span>
+            </button>
+            
+            <button
+              className={`nav-button ${activeTab === 'wyrd' ? 'active' : ''}`}
+              onClick={() => handleTabChange('wyrd')}
+            >
+              <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>ᛉ</span>
+              <span>Web of Wyrd</span>
             </button>
           </nav>
         </div>
@@ -531,6 +539,94 @@ function App() {
               <p className="rune-meaning" style={{ fontStyle: 'italic', opacity: 0.8 }}>
                 "When runes are bound together, their power multiplies. 
                 Choose wisely, for the bindrune becomes a living symbol of your intent."
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {activeTab === 'wyrd' && (
+        <div>
+          <div className="rune-card" style={{ maxWidth: '800px', margin: '0 auto' }}>
+            <h2 style={{ textAlign: 'center', marginBottom: '2rem' }}>The Web of Wyrd</h2>
+            
+            <p className="rune-meaning" style={{ marginBottom: '2rem', textAlign: 'center' }}>
+              <strong>The Web of Wyrd</strong> represents the interconnected nature of all things - past, present, and future. 
+              It is the cosmic tapestry woven by the Norns, where every action ripples through time and space.
+            </p>
+            
+            <div style={{ marginBottom: '2rem' }}>
+              <h3 style={{ color: '#e8f4fd', marginBottom: '1rem' }}>The Three Norns</h3>
+              <p className="rune-meaning">
+                <strong>Urd</strong> (Past) - She who has become, representing what has been woven into the fabric of existence.<br />
+                <strong>Verdandi</strong> (Present) - She who is becoming, the moment of creation and choice.<br />
+                <strong>Skuld</strong> (Future) - She who shall be, the potential and what is owed to the past.
+              </p>
+            </div>
+            
+            <div style={{ marginBottom: '2rem' }}>
+              <h3 style={{ color: '#e8f4fd', marginBottom: '1rem' }}>The Nine Worlds</h3>
+              <p className="rune-meaning">
+                The Web connects all nine realms of Norse cosmology, from the heights of Asgard to the depths of Hel. 
+                Each world influences the others, and the threads of wyrd bind them together in an eternal dance of cause and effect.
+              </p>
+            </div>
+            
+            <div style={{ marginBottom: '2rem' }}>
+              <h3 style={{ color: '#e8f4fd', marginBottom: '1rem' }}>Understanding Wyrd</h3>
+              <p className="rune-meaning">
+                Wyrd is not simple fate or destiny, but the complex web of relationships, choices, and consequences that shape our lives. 
+                Every decision we make affects the pattern, and every action ripples outward to touch others. 
+                The past influences the present, and the present shapes the future, but we always have the power to choose our path.
+              </p>
+            </div>
+            
+            <div style={{ marginBottom: '2rem' }}>
+              <h3 style={{ color: '#e8f4fd', marginBottom: '1rem' }}>The Symbol</h3>
+              <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
+                <div style={{ 
+                  fontSize: '4rem', 
+                  color: '#e8f4fd',
+                  textShadow: '0 0 20px rgba(232, 244, 253, 0.5)',
+                  marginBottom: '1rem'
+                }}>
+                  ᛉ
+                </div>
+                <p style={{ fontSize: '1.1rem', color: '#b8d4e6', fontStyle: 'italic' }}>
+                  The Web of Wyrd symbol represents the interconnected threads of fate
+                </p>
+              </div>
+            </div>
+            
+            <div style={{ marginBottom: '2rem' }}>
+              <h3 style={{ color: '#e8f4fd', marginBottom: '1rem' }}>The Runes in the Web</h3>
+              <p className="rune-meaning">
+                All 24 runes of the Elder Futhark can be found within the Web of Wyrd. When we study the runes, 
+                we are actually reading the patterns of wyrd itself. The runes are not separate from the Web - 
+                they are the Web, expressed in symbolic form.
+              </p>
+              <p className="rune-meaning">
+                When you draw runes or work with them, you are connecting directly to the threads of wyrd. 
+                Each rune carries the wisdom of the Web and can reveal how the past, present, and future are 
+                woven together in your life. The runes are the language of wyrd, and through them, 
+                we can learn to read the patterns of the great tapestry.
+              </p>
+            </div>
+            
+            <div style={{ marginBottom: '2rem' }}>
+              <h3 style={{ color: '#e8f4fd', marginBottom: '1rem' }}>Working with Wyrd</h3>
+              <p className="rune-meaning">
+                To work with wyrd is to understand that we are both weavers and threads in the great tapestry. 
+                We can learn to read the patterns, make conscious choices, and take responsibility for our actions. 
+                By honoring the past, being mindful in the present, and shaping the future with wisdom, 
+                we become active participants in the weaving of our own destiny.
+              </p>
+            </div>
+            
+            <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+              <p className="rune-meaning" style={{ fontStyle: 'italic', opacity: 0.8 }}>
+                "The threads of wyrd are woven by our choices, 
+                and every moment is a chance to change the pattern."
               </p>
             </div>
           </div>
