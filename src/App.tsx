@@ -508,9 +508,20 @@ function App() {
       )}
 
       {activeTab === 'lookup' && (
-        <div>
+        <div 
+          onClick={() => selectedLookupRune && closeLookupRune()}
+          style={{ 
+            minHeight: '100vh',
+            width: '100%',
+            position: 'relative'
+          }}
+        >
           {selectedLookupRune ? (
-            <div className="rune-card" style={{ maxWidth: '600px', margin: '0 auto' }}>
+            <div 
+              className="rune-card" 
+              style={{ maxWidth: '600px', margin: '0 auto' }}
+              onClick={(e) => e.stopPropagation()}
+            >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
                 <h2 style={{ margin: 0 }}>{selectedLookupRune.name}</h2>
                 <button 
