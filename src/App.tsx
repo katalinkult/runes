@@ -10,6 +10,7 @@ function App() {
   const [runeCount, setRuneCount] = useState<'one' | 'two' | 'three' | 'five'>('one');
   const [isPulling, setIsPulling] = useState(false);
   const [selectedLookupRune, setSelectedLookupRune] = useState<Rune | null>(null);
+  const [dictionarySearch, setDictionarySearch] = useState('');
 
   const runeDrawingContainerRef = useRef<HTMLDivElement>(null);
   const singleRuneResultRef = useRef<HTMLDivElement>(null);
@@ -93,6 +94,12 @@ function App() {
     setSelectedLookupRune(null);
   };
 
+  const filteredRunes = runes.filter(rune => 
+    rune.name.toLowerCase().includes(dictionarySearch.toLowerCase()) ||
+    rune.meaning.toLowerCase().includes(dictionarySearch.toLowerCase()) ||
+    rune.description.toLowerCase().includes(dictionarySearch.toLowerCase())
+  );
+
   return (
     <>
       <div className="top-band">
@@ -147,8 +154,86 @@ function App() {
 
       {activeTab === 'dictionary' && (
         <div style={{ position: 'relative' }}>
+          <div style={{ 
+            marginBottom: '2rem', 
+            display: 'flex', 
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '1rem',
+            flexWrap: 'wrap'
+          }}>
+            <div style={{ position: 'relative', minWidth: '300px', maxWidth: '500px', width: '100%' }}>
+              <input
+                type="text"
+                placeholder="Search runes by name, meaning, or description..."
+                value={dictionarySearch}
+                onChange={(e) => setDictionarySearch(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '0.75rem 2.5rem 0.75rem 1rem',
+                  background: 'linear-gradient(145deg, #2a2a2a, #1a1a1a)',
+                  border: '2px solid #3a3a3a',
+                  borderRadius: '8px',
+                  color: '#e8f4fd',
+                  fontSize: '1rem',
+                  fontFamily: 'inherit',
+                  outline: 'none',
+                  transition: 'all 0.3s ease',
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)',
+                  boxSizing: 'border-box'
+                }}
+                onFocus={(e) => {
+                  e.target.style.borderColor = '#63b3ed';
+                  e.target.style.boxShadow = '0 0 15px rgba(99, 179, 237, 0.3)';
+                }}
+                onBlur={(e) => {
+                  e.target.style.borderColor = '#3a3a3a';
+                  e.target.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.3)';
+                }}
+              />
+              {dictionarySearch && (
+                <button
+                  onClick={() => setDictionarySearch('')}
+                  style={{
+                    position: 'absolute',
+                    right: '0.5rem',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    background: 'none',
+                    border: 'none',
+                    color: '#b8d4e6',
+                    cursor: 'pointer',
+                    fontSize: '1.2rem',
+                    padding: '0.25rem',
+                    borderRadius: '4px',
+                    transition: 'all 0.2s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = '#e8f4fd';
+                    e.currentTarget.style.background = 'rgba(232, 244, 253, 0.1)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = '#b8d4e6';
+                    e.currentTarget.style.background = 'none';
+                  }}
+                >
+                  ×
+                </button>
+              )}
+            </div>
+            {dictionarySearch && (
+              <div style={{ 
+                color: '#b8d4e6', 
+                fontSize: '0.9rem',
+                textAlign: 'center'
+              }}>
+                Found {filteredRunes.length} rune{filteredRunes.length !== 1 ? 's' : ''}
+              </div>
+            )}
+          </div>
+          
           <div className="rune-grid">
-            {runes.map((rune) => (
+            {filteredRunes.map((rune) => (
               <div key={rune.id} className="rune-card">
                 <span className="rune-symbol">{rune.symbol}</span>
                 <h3 className="rune-name">{rune.name}</h3>
