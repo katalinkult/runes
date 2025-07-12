@@ -651,10 +651,9 @@ function App() {
                     src="/bindrunethurisazraidho1.png" 
                     alt="Thurisaz + Raidho Bindrune" 
                     style={{ 
-                      maxWidth: '200px', 
+                      maxWidth: '150px', 
                       height: 'auto', 
                       marginBottom: '1rem',
-                      borderRadius: '8px',
                       cursor: 'pointer',
                       transition: 'transform 0.2s ease'
                     }}
@@ -679,10 +678,9 @@ function App() {
                     src="/bindruneingwazothala2.png" 
                     alt="Ingwaz + Othala Bindrune" 
                     style={{ 
-                      maxWidth: '200px', 
+                      maxWidth: '150px', 
                       height: 'auto', 
                       marginBottom: '1rem',
-                      borderRadius: '8px',
                       cursor: 'pointer',
                       transition: 'transform 0.2s ease'
                     }}
