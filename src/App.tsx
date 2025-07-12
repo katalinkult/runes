@@ -675,7 +675,7 @@ function App() {
                 
                 <div style={{ textAlign: 'center', padding: '1.5rem', background: 'linear-gradient(145deg, #2a2a2a, #1a1a1a)', borderRadius: '12px', border: '2px solid #3a3a3a' }}>
                   <img 
-                    src="/bindruneingwazothala2.png" 
+                    src="/bindruneingwazothala1.png" 
                     alt="Ingwaz + Othala Bindrune" 
                     style={{ 
                       maxWidth: '150px', 
@@ -684,7 +684,7 @@ function App() {
                       cursor: 'pointer',
                       transition: 'transform 0.2s ease'
                     }}
-                    onClick={() => setEnlargedImage('/bindruneingwazothala2.png')}
+                    onClick={() => setEnlargedImage('/bindruneingwazothala1.png')}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.transform = 'scale(1.05)';
                     }}
