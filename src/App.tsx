@@ -11,6 +11,7 @@ function App() {
   const [isPulling, setIsPulling] = useState(false);
   const [selectedLookupRune, setSelectedLookupRune] = useState<Rune | null>(null);
   const [dictionarySearch, setDictionarySearch] = useState('');
+  const [enlargedImage, setEnlargedImage] = useState<string | null>(null);
 
   const runeDrawingContainerRef = useRef<HTMLDivElement>(null);
   const singleRuneResultRef = useRef<HTMLDivElement>(null);
@@ -92,6 +93,10 @@ function App() {
 
   const closeLookupRune = () => {
     setSelectedLookupRune(null);
+  };
+
+  const closeEnlargedImage = () => {
+    setEnlargedImage(null);
   };
 
   const filteredRunes = runes.filter(rune => 
@@ -649,8 +654,17 @@ function App() {
                       maxWidth: '200px', 
                       height: 'auto', 
                       marginBottom: '1rem',
-                      borderRadius: '8px'
-                    }} 
+                      borderRadius: '8px',
+                      cursor: 'pointer',
+                      transition: 'transform 0.2s ease'
+                    }}
+                    onClick={() => setEnlargedImage('/bindrunethurisazraidho1.png')}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'scale(1.05)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'scale(1)';
+                    }}
                   />
                   <h4 style={{ color: '#e8f4fd', marginBottom: '0.5rem' }}>Thurisaz + Raidho</h4>
                   <p style={{ fontSize: '0.9rem', color: '#b8d4e6', marginBottom: '0.5rem' }}>Protection + Journey</p>
@@ -668,8 +682,17 @@ function App() {
                       maxWidth: '200px', 
                       height: 'auto', 
                       marginBottom: '1rem',
-                      borderRadius: '8px'
-                    }} 
+                      borderRadius: '8px',
+                      cursor: 'pointer',
+                      transition: 'transform 0.2s ease'
+                    }}
+                    onClick={() => setEnlargedImage('/bindruneingwazothala2.png')}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'scale(1.05)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'scale(1)';
+                    }}
                   />
                   <h4 style={{ color: '#e8f4fd', marginBottom: '0.5rem' }}>Ingwaz + Othala</h4>
                   <p style={{ fontSize: '0.9rem', color: '#b8d4e6', marginBottom: '0.5rem' }}>Fertility + Heritage</p>
@@ -784,6 +807,77 @@ function App() {
                 and every moment is a chance to change the pattern."
               </p>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Enlarged Image Modal */}
+      {enlargedImage && (
+        <div 
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            background: 'rgba(0, 0, 0, 0.8)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 2000,
+            backdropFilter: 'blur(5px)'
+          }}
+          onClick={closeEnlargedImage}
+        >
+          <div 
+            style={{
+              position: 'relative',
+              maxWidth: '90vw',
+              maxHeight: '90vh'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img 
+              src={enlargedImage} 
+              alt="Enlarged Bindrune" 
+              style={{
+                maxWidth: '100%',
+                maxHeight: '100%',
+                objectFit: 'contain',
+                borderRadius: '12px',
+                boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)'
+              }}
+            />
+            <button
+              onClick={closeEnlargedImage}
+              style={{
+                position: 'absolute',
+                top: '-40px',
+                right: '0',
+                background: 'rgba(232, 244, 253, 0.1)',
+                border: '1px solid rgba(232, 244, 253, 0.3)',
+                borderRadius: '50%',
+                width: '30px',
+                height: '30px',
+                color: '#e8f4fd',
+                cursor: 'pointer',
+                fontSize: '1.2rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(232, 244, 253, 0.2)';
+                e.currentTarget.style.borderColor = 'rgba(232, 244, 253, 0.5)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(232, 244, 253, 0.1)';
+                e.currentTarget.style.borderColor = 'rgba(232, 244, 253, 0.3)';
+              }}
+            >
+              ×
+            </button>
           </div>
         </div>
       )}
