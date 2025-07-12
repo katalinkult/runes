@@ -761,12 +761,59 @@ function App() {
               <h3 style={{ color: '#e8f4fd', marginBottom: '1rem' }}>The Symbol</h3>
               <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
                 <div style={{ 
-                  fontSize: '4rem', 
-                  color: '#e8f4fd',
-                  textShadow: '0 0 20px rgba(232, 244, 253, 0.5)',
+                  display: 'flex', 
+                  justifyContent: 'center', 
+                  gap: '2rem', 
+                  flexWrap: 'wrap',
                   marginBottom: '1rem'
                 }}>
-                  ᛉ
+                  <div style={{ textAlign: 'center' }}>
+                    <img 
+                      src="/webofwyrd1.png" 
+                      alt="Web of Wyrd Symbol 1" 
+                      style={{
+                        width: '200px',
+                        height: '200px',
+                        objectFit: 'contain',
+                        cursor: 'pointer',
+                        transition: 'transform 0.2s ease',
+                        borderRadius: '8px',
+                        border: '2px solid #3a3a3a'
+                      }}
+                      onClick={() => setEnlargedImage('/webofwyrd1.png')}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'scale(1.05)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'scale(1)';
+                      }}
+                    />
+                    <p style={{ fontSize: '0.9rem', color: '#b8d4e6', marginTop: '0.5rem' }}>Web of Wyrd - Version 1</p>
+                  </div>
+                  
+                  <div style={{ textAlign: 'center' }}>
+                    <img 
+                      src="/webofwyrd2.png" 
+                      alt="Web of Wyrd Symbol 2" 
+                      style={{
+                        width: '200px',
+                        height: '200px',
+                        objectFit: 'contain',
+                        cursor: 'pointer',
+                        transition: 'transform 0.2s ease',
+                        borderRadius: '8px',
+                        border: '2px solid #3a3a3a'
+                      }}
+                      onClick={() => setEnlargedImage('/webofwyrd2.png')}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'scale(1.05)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'scale(1)';
+                      }}
+                    />
+                    <p style={{ fontSize: '0.9rem', color: '#b8d4e6', marginTop: '0.5rem' }}>Web of Wyrd - Version 2</p>
+                  </div>
                 </div>
                 <p style={{ fontSize: '1.1rem', color: '#b8d4e6', fontStyle: 'italic' }}>
                   The Web of Wyrd symbol represents the interconnected threads of fate
