@@ -640,23 +640,43 @@ function App() {
             
             <div style={{ marginBottom: '2rem' }}>
               <h3 style={{ color: '#e8f4fd', marginBottom: '1rem' }}>Common Bindrune Examples</h3>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem', marginTop: '1rem' }}>
-                <div style={{ textAlign: 'center', padding: '1rem', background: 'linear-gradient(145deg, #2a2a2a, #1a1a1a)', borderRadius: '8px', border: '1px solid #3a3a3a' }}>
-                  <div style={{ fontSize: '3rem', marginBottom: '0.5rem', color: '#e8f4fd' }}>ᚠᚢ</div>
-                  <h4 style={{ color: '#e8f4fd', marginBottom: '0.5rem' }}>Fehu + Uruz</h4>
-                  <p style={{ fontSize: '0.9rem', color: '#b8d4e6' }}>Wealth + Strength</p>
-                </div>
-                
-                <div style={{ textAlign: 'center', padding: '1rem', background: 'linear-gradient(145deg, #2a2a2a, #1a1a1a)', borderRadius: '8px', border: '1px solid #3a3a3a' }}>
-                  <div style={{ fontSize: '3rem', marginBottom: '0.5rem', color: '#e8f4fd' }}>ᚦᚱ</div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', marginTop: '1rem' }}>
+                <div style={{ textAlign: 'center', padding: '1.5rem', background: 'linear-gradient(145deg, #2a2a2a, #1a1a1a)', borderRadius: '12px', border: '2px solid #3a3a3a' }}>
+                  <img 
+                    src="/bindrunethurisazraidho1.png" 
+                    alt="Thurisaz + Raidho Bindrune" 
+                    style={{ 
+                      maxWidth: '200px', 
+                      height: 'auto', 
+                      marginBottom: '1rem',
+                      borderRadius: '8px'
+                    }} 
+                  />
                   <h4 style={{ color: '#e8f4fd', marginBottom: '0.5rem' }}>Thurisaz + Raidho</h4>
-                  <p style={{ fontSize: '0.9rem', color: '#b8d4e6' }}>Protection + Journey</p>
+                  <p style={{ fontSize: '0.9rem', color: '#b8d4e6', marginBottom: '0.5rem' }}>Protection + Journey</p>
+                  <p style={{ fontSize: '0.85rem', color: '#a0aec0', fontStyle: 'italic' }}>
+                    This bindrune combines the protective power of Thurisaz with the guidance of Raidho. 
+                    It's often used for safe travels and protection during journeys, both physical and spiritual.
+                  </p>
                 </div>
                 
-                <div style={{ textAlign: 'center', padding: '1rem', background: 'linear-gradient(145deg, #2a2a2a, #1a1a1a)', borderRadius: '8px', border: '1px solid #3a3a3a' }}>
-                  <div style={{ fontSize: '3rem', marginBottom: '0.5rem', color: '#e8f4fd' }}>ᚨᛗ</div>
-                  <h4 style={{ color: '#e8f4fd', marginBottom: '0.5rem' }}>Ansuz + Mannaz</h4>
-                  <p style={{ fontSize: '0.9rem', color: '#b8d4e6' }}>Wisdom + Humanity</p>
+                <div style={{ textAlign: 'center', padding: '1.5rem', background: 'linear-gradient(145deg, #2a2a2a, #1a1a1a)', borderRadius: '12px', border: '2px solid #3a3a3a' }}>
+                  <img 
+                    src="/bindruneingwazothala2.png" 
+                    alt="Ingwaz + Othala Bindrune" 
+                    style={{ 
+                      maxWidth: '200px', 
+                      height: 'auto', 
+                      marginBottom: '1rem',
+                      borderRadius: '8px'
+                    }} 
+                  />
+                  <h4 style={{ color: '#e8f4fd', marginBottom: '0.5rem' }}>Ingwaz + Othala</h4>
+                  <p style={{ fontSize: '0.9rem', color: '#b8d4e6', marginBottom: '0.5rem' }}>Fertility + Heritage</p>
+                  <p style={{ fontSize: '0.85rem', color: '#a0aec0', fontStyle: 'italic' }}>
+                    This bindrune unites the creative energy of Ingwaz with the ancestral wisdom of Othala. 
+                    It represents the continuation of family traditions and the fertile ground for new beginnings.
+                  </p>
                 </div>
               </div>
             </div>
