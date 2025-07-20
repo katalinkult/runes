@@ -415,40 +415,67 @@ function App() {
               </button>
             </div>
           ) : (
-            <div ref={multipleRunesResultRef} className="rune-card" style={{ maxWidth: '600px', margin: '0 auto' }}>
+            <div ref={multipleRunesResultRef} className="rune-card" style={{ maxWidth: '1200px', margin: '0 auto' }}>
               <h2>Your {runeCount === 'two' ? 'Two' : runeCount === 'three' ? 'Three' : 'Five'} Runes</h2>
               
-              <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '2rem', flexWrap: 'wrap' }}>
+              <div style={{ 
+                display: 'grid', 
+                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
+                gap: '1.5rem', 
+                marginBottom: '2rem',
+                justifyContent: 'center'
+              }}>
                 {selectedRunes.map((rune, index) => (
-                  <div key={index} style={{ textAlign: 'center', margin: '0.5rem' }}>
+                  <div 
+                    key={index} 
+                    style={{ 
+                      background: 'linear-gradient(145deg, #3a3a3a, #2a2a2a)',
+                      border: '2px solid #4a5568',
+                      borderRadius: '12px',
+                      padding: '1.5rem',
+                      textAlign: 'center',
+                      boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)',
+                      transition: 'all 0.3s ease',
+                      minHeight: '200px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      alignItems: 'center'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-5px)';
+                      e.currentTarget.style.boxShadow = '0 8px 25px rgba(99, 179, 237, 0.2)';
+                      e.currentTarget.style.borderColor = '#63b3ed';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.3)';
+                      e.currentTarget.style.borderColor = '#4a5568';
+                    }}
+                  >
                     {index < revealedRunes.length ? (
                       <>
-                        <span className="rune-symbol" style={{ fontSize: '3rem' }}>{rune.symbol}</span>
-                        <h3 className="rune-name" style={{ fontSize: '1.2rem' }}>{rune.name}</h3>
+                        <span className="rune-symbol" style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>{rune.symbol}</span>
+                        <h3 className="rune-name" style={{ fontSize: '1.3rem', marginBottom: '0.5rem' }}>{rune.name}</h3>
+                        <p className="rune-meaning" style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
+                          <strong>{rune.meaning}</strong>
+                        </p>
+                        <p className="rune-meaning" style={{ fontSize: '0.9rem', lineHeight: '1.4' }}>
+                          {rune.description}
+                        </p>
                       </>
                     ) : (
                       <>
-                        <span className="rune-symbol" style={{ fontSize: '3rem', opacity: 0.3 }}>?</span>
-                        <h3 className="rune-name" style={{ fontSize: '1.2rem', opacity: 0.3 }}>Hidden</h3>
+                        <span className="rune-symbol" style={{ fontSize: '3.5rem', opacity: 0.3, marginBottom: '1rem' }}>?</span>
+                        <h3 className="rune-name" style={{ fontSize: '1.3rem', opacity: 0.3, marginBottom: '0.5rem' }}>Hidden</h3>
+                        <p style={{ fontSize: '1rem', color: '#a0aec0', fontStyle: 'italic' }}>
+                          Click "Reveal Next Rune" to uncover this rune
+                        </p>
                       </>
                     )}
                   </div>
                 ))}
               </div>
-              
-              {revealedRunes.length > 0 && (
-                <div style={{ marginBottom: '2rem' }}>
-                  {revealedRunes.map((rune, index) => (
-                    <div key={index} style={{ marginBottom: '1.5rem' }}>
-                      <h4 style={{ color: '#e8f4fd', marginBottom: '0.5rem' }}>{rune.name}</h4>
-                      <p className="rune-meaning">
-                        <strong>{rune.meaning}</strong>
-                      </p>
-                      <p className="rune-meaning">{rune.description}</p>
-                    </div>
-                  ))}
-                </div>
-              )}
               
               {revealedRunes.length < selectedRunes.length ? (
                 <button className="pull-button" onClick={revealNextRune}>
