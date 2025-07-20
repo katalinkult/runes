@@ -436,13 +436,9 @@ function App() {
                       textAlign: 'center',
                       boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)',
                       transition: 'all 0.3s ease',
-                      width: '280px',
-                      height: '320px',
-                      flex: '0 1 auto',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'center',
-                      alignItems: 'center'
+                      minWidth: '250px',
+                      maxWidth: '300px',
+                      flex: '0 1 auto'
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.transform = 'translateY(-5px)';
