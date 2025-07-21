@@ -3,7 +3,7 @@ import { runes, getRandomRune, Rune } from './data/runes';
 import { BookOpen, Sparkles, Search } from 'lucide-react';
 
 function App() {
-  const [activeTab, setActiveTab] = useState<'dictionary' | 'lookup' | 'bindrunes' | 'wyrd' | 'randompull'>('dictionary');
+  const [activeTab, setActiveTab] = useState<'dictionary' | 'lookup' | 'bindrunes' | 'wyrd' | 'randompull' | 'history'>('dictionary');
   const [dailyRune, setDailyRune] = useState<Rune | null>(null);
   const [selectedRunes, setSelectedRunes] = useState<Rune[]>([]);
   const [revealedRunes, setRevealedRunes] = useState<Rune[]>([]);
@@ -108,7 +108,7 @@ function App() {
     }
   }, [selectedRunes, dailyRune]);
 
-  const handleTabChange = (tab: 'dictionary' | 'lookup' | 'bindrunes' | 'wyrd' | 'randompull') => {
+  const handleTabChange = (tab: 'dictionary' | 'lookup' | 'bindrunes' | 'wyrd' | 'randompull' | 'history') => {
     setActiveTab(tab);
     setSelectedLookupRune(null);
     if (tab === 'randompull') {
@@ -189,6 +189,23 @@ function App() {
             >
               <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>ᛉ</span>
               <span>Web of Wyrd</span>
+            </button>
+
+            <button
+              className={`nav-button ${activeTab === 'history' ? 'active' : ''}`}
+              onClick={() => handleTabChange('history')}
+            >
+              <span style={{
+                fontSize: '1.5rem',
+                fontWeight: 'bold',
+                color: '#e8f4fd',
+                textShadow: '0 0 8px #63b3ed, 0 0 16px #63b3ed',
+                marginRight: '0.5rem',
+                verticalAlign: 'middle',
+                display: 'inline-block',
+                lineHeight: 1
+              }}>ᚨ</span>
+              <span>History of Runes</span>
             </button>
           </nav>
         </div>
@@ -785,6 +802,29 @@ function App() {
               </p>
             </div>
           </div>
+        </div>
+      )}
+
+      {activeTab === 'history' && (
+        <div className="rune-card" style={{ maxWidth: '800px', margin: '3rem auto', padding: '2rem', background: 'linear-gradient(145deg, #23272e, #181a1f)', borderRadius: '16px', boxShadow: '0 8px 32px rgba(0,0,0,0.4)', color: '#e8f4fd', fontFamily: 'Crimson Text, serif', fontSize: '1.2rem', lineHeight: 1.7 }}>
+          <h2 style={{ textAlign: 'center', marginBottom: '2rem', fontFamily: 'Cinzel, serif', fontSize: '2.2rem', letterSpacing: '0.1em', color: '#b8d4e6', textShadow: '0 0 12px #63b3ed' }}>
+            The History of the Runes
+          </h2>
+          <p style={{ fontStyle: 'italic', color: '#b8d4e6', marginBottom: '2rem', textAlign: 'center' }}>
+            "Nine mighty nights I hung on the wind-swept tree, wounded by spear, given to Odin, myself to myself..."
+          </p>
+          <p>
+            In the mists of the ancient North, before the world was fully formed, the runes were hidden mysteries, woven into the fabric of existence. The gods themselves did not know their secrets. It was Odin, the Allfather, who sought their wisdom above all else.
+          </p>
+          <p>
+            Odin sacrificed himself upon Yggdrasil, the World Tree, hanging for nine nights and nine days, pierced by his own spear, without food or drink. In this ordeal, he gazed into the depths of the Well of Urd, where the Norns weave the fates of gods and men. There, in the darkness and pain, the runes revealed themselves to him—shimmering symbols of power, fate, and magic.
+          </p>
+          <p>
+            With a final cry, Odin seized the runes, gaining their knowledge and the ability to shape destiny. He brought the runes back to the worlds, teaching them to gods, elves, and humankind. Thus, the runes became the language of magic, poetry, and prophecy, a bridge between the seen and unseen.
+          </p>
+          <p style={{ marginTop: '2rem', color: '#b8d4e6', fontStyle: 'italic', textAlign: 'center' }}>
+            "From the Well of Urd, from the roots of Yggdrasil, the runes came forth—gifts of sacrifice, wisdom, and fate."
+          </p>
         </div>
       )}
 
