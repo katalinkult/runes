@@ -3,7 +3,7 @@ import { runes, getRandomRune, Rune } from './data/runes';
 import { BookOpen, Sparkles, Search } from 'lucide-react';
 
 function App() {
-  const [activeTab, setActiveTab] = useState<'dictionary' | 'daily' | 'lookup' | 'bindrunes' | 'wyrd' | 'horizontalpull'>('dictionary');
+  const [activeTab, setActiveTab] = useState<'dictionary' | 'lookup' | 'bindrunes' | 'wyrd' | 'randompull'>('dictionary');
   const [dailyRune, setDailyRune] = useState<Rune | null>(null);
   const [selectedRunes, setSelectedRunes] = useState<Rune[]>([]);
   const [revealedRunes, setRevealedRunes] = useState<Rune[]>([]);
@@ -108,10 +108,10 @@ function App() {
     }
   }, [selectedRunes, dailyRune]);
 
-  const handleTabChange = (tab: 'dictionary' | 'daily' | 'lookup' | 'bindrunes' | 'wyrd' | 'horizontalpull') => {
+  const handleTabChange = (tab: 'dictionary' | 'lookup' | 'bindrunes' | 'wyrd' | 'randompull') => {
     setActiveTab(tab);
     setSelectedLookupRune(null);
-    if (tab === 'daily') {
+    if (tab === 'randompull') {
       // Scroll to the rune drawing container
       scrollToContainer(runeDrawingContainerRef);
     }
@@ -143,11 +143,20 @@ function App() {
           
           <nav className="top-nav">
             <button
-              className={`nav-button ${activeTab === 'daily' ? 'active' : ''}`}
-              onClick={() => handleTabChange('daily')}
+              className={`nav-button ${activeTab === 'randompull' ? 'active' : ''}`}
+              onClick={() => handleTabChange('randompull')}
             >
-              <Sparkles size={18} />
-              <span>Pull a Rune</span>
+              <span style={{
+                fontSize: '1.7rem',
+                fontWeight: 'bold',
+                color: '#e8f4fd',
+                textShadow: '0 0 8px #63b3ed, 0 0 16px #63b3ed',
+                marginRight: '0.5rem',
+                verticalAlign: 'middle',
+                display: 'inline-block',
+                lineHeight: 1
+              }}>ᛟ</span>
+              <span>Pull Random Runes</span>
             </button>
             
             <button
@@ -180,14 +189,6 @@ function App() {
             >
               <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>ᛉ</span>
               <span>Web of Wyrd</span>
-            </button>
-
-            <button
-              className={`nav-button ${activeTab === 'horizontalpull' ? 'active' : ''}`}
-              onClick={() => handleTabChange('horizontalpull')}
-            >
-              <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>⇄</span>
-              <span>Horizontal Pull</span>
             </button>
           </nav>
         </div>
@@ -327,228 +328,121 @@ function App() {
         </div>
       )}
 
-      {activeTab === 'daily' && (
-        <div>
-          {!dailyRune && selectedRunes.length === 0 ? (
-            <div ref={runeDrawingContainerRef} className="rune-card" style={{ maxWidth: '600px', margin: '0 auto' }}>
-              <div style={{ marginBottom: '2rem' }}>
-                <img src="/huginmunin1.png" alt="Hugin and Munin" style={{ maxWidth: '300px', height: 'auto' }} />
-              </div>
-              <p style={{ marginBottom: '1rem', fontSize: '1.2rem', color: '#b8d4e6' }}>
-                Let your hand find the rune meant for you.<br />
-                The one you choose will mark your path.
-              </p>
-              <p style={{ marginBottom: '2rem', fontSize: '1.2rem', color: '#b8d4e6', fontStyle: 'italic' }}>
-                Click the button when you are ready!
-              </p>
-              
-              <div style={{ marginBottom: '2rem' }}>
-                <p style={{ marginBottom: '1rem', fontSize: '1.1rem', color: '#e8f4fd', textAlign: 'center' }}>
-                  Choose how many runes to draw:
-                </p>
-                <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-                  {(['one', 'two', 'three', 'five'] as const).map((count) => (
-                    <button
-                      key={count}
-                      onClick={() => setRuneCount(count)}
-                      style={{
-                        background: runeCount === count 
-                          ? 'linear-gradient(145deg, #4a5568, #2d3748)' 
-                          : 'linear-gradient(145deg, #2a2a2a, #1a1a1a)',
-                        color: '#e8f4fd',
-                        border: runeCount === count ? '2px solid #63b3ed' : '2px solid #3a3a3a',
-                        borderRadius: '8px',
-                        padding: '0.75rem 1.5rem',
-                        fontSize: '1rem',
-                        cursor: 'pointer',
-                        transition: 'all 0.3s ease',
-                        boxShadow: runeCount === count ? '0 0 15px rgba(99, 179, 237, 0.3)' : 'none',
-                        minWidth: '120px'
-                      }}
-                      onMouseEnter={(e) => {
-                        if (runeCount !== count) {
-                          e.currentTarget.style.background = 'linear-gradient(145deg, #3a3a3a, #2a2a2a)';
-                          e.currentTarget.style.borderColor = '#4a5568';
-                          e.currentTarget.style.boxShadow = '0 0 10px rgba(99, 179, 237, 0.2)';
-                        }
-                      }}
-                      onMouseLeave={(e) => {
-                        if (runeCount !== count) {
-                          e.currentTarget.style.background = 'linear-gradient(145deg, #2a2a2a, #1a1a1a)';
-                          e.currentTarget.style.borderColor = '#3a3a3a';
-                          e.currentTarget.style.boxShadow = 'none';
-                        }
-                      }}
-                    >
-                      {count === 'one' ? '1 Rune' : 
-                       count === 'two' ? '2 Runes' : 
-                       count === 'three' ? '3 Runes' : '5 Runes'}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              
-              <button className="pull-button" onClick={runeCount === 'one' ? pullDailyRune : pullMultipleRunes}>
-                Draw {runeCount === 'one' ? 'a Rune' : `${runeCount === 'two' ? 'Two' : runeCount === 'three' ? 'Three' : 'Five'} Runes`}
-              </button>
-            </div>
-          ) : dailyRune ? (
-            <div ref={singleRuneResultRef} className="rune-card" style={{ maxWidth: '600px', margin: '0 auto' }}>
-              <h2>Your Rune</h2>
-              <span className="rune-symbol">{dailyRune.symbol}</span>
-              <h3 className="rune-name">{dailyRune.name}</h3>
-              <p className="rune-meaning">
-                <strong>{dailyRune.meaning}</strong>
-              </p>
-              <p className="rune-meaning">{dailyRune.description}</p>
-              
-              <div style={{ marginBottom: '2rem' }}>
-                <p style={{ marginBottom: '1rem', fontSize: '1.1rem', color: '#e8f4fd', textAlign: 'center' }}>
-                  Choose how many runes to draw:
-                </p>
-                <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-                  {(['one', 'two', 'three', 'five'] as const).map((count) => (
-                    <button
-                      key={count}
-                      onClick={() => setRuneCount(count)}
-                      style={{
-                        background: runeCount === count 
-                          ? 'linear-gradient(145deg, #4a5568, #2d3748)' 
-                          : 'linear-gradient(145deg, #2a2a2a, #1a1a1a)',
-                        color: '#e8f4fd',
-                        border: runeCount === count ? '2px solid #63b3ed' : '2px solid #3a3a3a',
-                        borderRadius: '8px',
-                        padding: '0.75rem 1.5rem',
-                        fontSize: '1rem',
-                        cursor: 'pointer',
-                        transition: 'all 0.3s ease',
-                        boxShadow: runeCount === count ? '0 0 15px rgba(99, 179, 237, 0.3)' : 'none',
-                        minWidth: '120px'
-                      }}
-                      onMouseEnter={(e) => {
-                        if (runeCount !== count) {
-                          e.currentTarget.style.background = 'linear-gradient(145deg, #3a3a3a, #2a2a2a)';
-                          e.currentTarget.style.borderColor = '#4a5568';
-                          e.currentTarget.style.boxShadow = '0 0 10px rgba(99, 179, 237, 0.2)';
-                        }
-                      }}
-                      onMouseLeave={(e) => {
-                        if (runeCount !== count) {
-                          e.currentTarget.style.background = 'linear-gradient(145deg, #2a2a2a, #1a1a1a)';
-                          e.currentTarget.style.borderColor = '#3a3a3a';
-                          e.currentTarget.style.boxShadow = 'none';
-                        }
-                      }}
-                    >
-                      {count === 'one' ? '1 Rune' : 
-                       count === 'two' ? '2 Runes' : 
-                       count === 'three' ? '3 Runes' : '5 Runes'}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              
-              <button className="pull-button" onClick={runeCount === 'one' ? pullDailyRune : pullMultipleRunes}>
-                Pull Another {runeCount === 'one' ? 'Rune' : `${runeCount === 'two' ? 'Two' : runeCount === 'three' ? 'Three' : 'Five'} Runes`}
-              </button>
-            </div>
-          ) : (
-            <div ref={multipleRunesResultRef} className="rune-card" style={{ maxWidth: '600px', margin: '0 auto' }}>
-              <h2>Your {runeCount === 'two' ? 'Two' : runeCount === 'three' ? 'Three' : 'Five'} Runes</h2>
-              
-              <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '2rem', flexWrap: 'wrap' }}>
-                {selectedRunes.map((rune, index) => (
-                  <div key={index} style={{ textAlign: 'center', margin: '0.5rem' }}>
-                    {index < revealedRunes.length ? (
-                      <>
-                        <span className="rune-symbol" style={{ fontSize: '3rem' }}>{rune.symbol}</span>
-                        <h3 className="rune-name" style={{ fontSize: '1.2rem' }}>{rune.name}</h3>
-                      </>
-                    ) : (
-                      <>
-                        <span className="rune-symbol" style={{ fontSize: '3rem', opacity: 0.3 }}>?</span>
-                        <h3 className="rune-name" style={{ fontSize: '1.2rem', opacity: 0.3 }}>Hidden</h3>
-                      </>
-                    )}
-                  </div>
+      {activeTab === 'randompull' && (
+        <div style={{ maxWidth: '1200px', marginLeft: 'auto', marginRight: 'auto' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '2rem', gap: '1.5rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap', marginBottom: '1.5rem', marginTop: 0 }}>
+                {(['one', 'two', 'three', 'five'] as const).map((count) => (
+                  <button
+                    key={count}
+                    onClick={() => {
+                      setHorizontalRuneCount(count);
+                      setHorizontalPulledRunes([]);
+                      setHorizontalRevealedRunes(0);
+                    }}
+                    style={{
+                      background: horizontalRuneCount === count 
+                        ? 'linear-gradient(145deg, #4a5568, #2d3748)' 
+                        : 'linear-gradient(145deg, #2a2a2a, #1a1a1a)',
+                      color: '#e8f4fd',
+                      border: horizontalRuneCount === count ? '2px solid #63b3ed' : '2px solid #3a3a3a',
+                      borderRadius: '8px',
+                      padding: '0.75rem 1.5rem',
+                      fontSize: '1rem',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                      boxShadow: horizontalRuneCount === count ? '0 0 15px rgba(99, 179, 237, 0.3)' : 'none',
+                      minWidth: '120px'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (horizontalRuneCount !== count) {
+                        e.currentTarget.style.background = 'linear-gradient(145deg, #3a3a3a, #2a2a2a)';
+                        e.currentTarget.style.borderColor = '#4a5568';
+                        e.currentTarget.style.boxShadow = '0 0 10px rgba(99, 179, 237, 0.2)';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (horizontalRuneCount !== count) {
+                        e.currentTarget.style.background = 'linear-gradient(145deg, #2a2a2a, #1a1a1a)';
+                        e.currentTarget.style.borderColor = '#3a3a3a';
+                        e.currentTarget.style.boxShadow = 'none';
+                      }
+                    }}
+                  >
+                    {count === 'one' ? '1 Rune' : 
+                     count === 'two' ? '2 Runes' : 
+                     count === 'three' ? '3 Runes' : '5 Runes'}
+                  </button>
                 ))}
               </div>
-              
-              {revealedRunes.length > 0 && (
-                <div style={{ marginBottom: '2rem' }}>
-                  {revealedRunes.map((rune, index) => (
-                    <div key={index} style={{ marginBottom: '1.5rem' }}>
-                      <h4 style={{ color: '#e8f4fd', marginBottom: '0.5rem' }}>{rune.name}</h4>
-                      <p className="rune-meaning">
+              {/* Context-sensitive main action button */}
+              {horizontalPulledRunes.length === 0 ? (
+                <button className="pull-button" style={{ marginBottom: '1.5rem', marginTop: 0 }} onClick={pullHorizontalRunes}>
+                  Pull {horizontalRuneCount === 'one' ? 'Rune' : horizontalRuneCount === 'two' ? 'Two Runes' : horizontalRuneCount === 'three' ? 'Three Runes' : 'Five Runes'}
+                </button>
+              ) : horizontalRevealedRunes < horizontalPulledRunes.length ? (
+                <button className="pull-button" style={{ marginBottom: '1.5rem', marginTop: 0 }} onClick={revealNextHorizontalRune}>
+                  Reveal Next Rune ({horizontalRevealedRunes + 1} of {horizontalPulledRunes.length})
+                </button>
+              ) : null}
+            </div>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                gap: '2rem',
+                justifyContent: 'center',
+                marginTop: '2rem',
+                marginBottom: '2rem',
+                maxWidth: '100%'
+              }}
+            >
+              {horizontalPulledRunes.map((rune, index) => (
+                <div
+                  key={index}
+                  style={{
+                    background: 'linear-gradient(145deg, #3a3a3a, #2a2a2a)',
+                    border: '2px solid #4a5568',
+                    borderRadius: '12px',
+                    padding: '1.5rem',
+                    textAlign: 'center',
+                    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)',
+                    transition: 'all 0.3s ease',
+                    minHeight: '200px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    maxWidth: '350px',
+                    marginLeft: 'auto',
+                    marginRight: 'auto'
+                  }}
+                >
+                  {index < horizontalRevealedRunes ? (
+                    <>
+                      <span className="rune-symbol" style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>{rune.symbol}</span>
+                      <h3 className="rune-name" style={{ fontSize: '1.3rem', marginBottom: '0.5rem' }}>{rune.name}</h3>
+                      <p className="rune-meaning" style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
                         <strong>{rune.meaning}</strong>
                       </p>
-                      <p className="rune-meaning">{rune.description}</p>
-                    </div>
-                  ))}
+                      <p className="rune-meaning" style={{ fontSize: '0.9rem', lineHeight: '1.4' }}>
+                        {rune.description}
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <span className="rune-symbol" style={{ fontSize: '3.5rem', opacity: 0.3, marginBottom: '1rem' }}>?</span>
+                      <h3 className="rune-name" style={{ fontSize: '1.3rem', opacity: 0.3, marginBottom: '0.5rem' }}>Hidden</h3>
+                      <p style={{ fontSize: '1rem', color: '#a0aec0', fontStyle: 'italic' }}>
+                        Click "Reveal Next Rune" to uncover this rune
+                      </p>
+                    </>
+                  )}
                 </div>
-              )}
-              
-              {revealedRunes.length < selectedRunes.length ? (
-                <button className="pull-button" onClick={revealNextRune}>
-                  Reveal Next Rune ({revealedRunes.length + 1} of {selectedRunes.length})
-                </button>
-              ) : (
-                <>
-                  <div style={{ marginBottom: '2rem' }}>
-                    <p style={{ marginBottom: '1rem', fontSize: '1.1rem', color: '#e8f4fd', textAlign: 'center' }}>
-                      Choose how many runes to draw:
-                    </p>
-                    <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-                      {(['one', 'two', 'three', 'five'] as const).map((count) => (
-                        <button
-                          key={count}
-                          onClick={() => setRuneCount(count)}
-                          style={{
-                            background: runeCount === count 
-                              ? 'linear-gradient(145deg, #4a5568, #2d3748)' 
-                              : 'linear-gradient(145deg, #2a2a2a, #1a1a1a)',
-                            color: '#e8f4fd',
-                            border: runeCount === count ? '2px solid #63b3ed' : '2px solid #3a3a3a',
-                            borderRadius: '8px',
-                            padding: '0.75rem 1.5rem',
-                            fontSize: '1rem',
-                            cursor: 'pointer',
-                            transition: 'all 0.3s ease',
-                            boxShadow: runeCount === count ? '0 0 15px rgba(99, 179, 237, 0.3)' : 'none',
-                            minWidth: '120px'
-                          }}
-                          onMouseEnter={(e) => {
-                            if (runeCount !== count) {
-                              e.currentTarget.style.background = 'linear-gradient(145deg, #3a3a3a, #2a2a2a)';
-                              e.currentTarget.style.borderColor = '#4a5568';
-                              e.currentTarget.style.boxShadow = '0 0 10px rgba(99, 179, 237, 0.2)';
-                            }
-                          }}
-                          onMouseLeave={(e) => {
-                            if (runeCount !== count) {
-                              e.currentTarget.style.background = 'linear-gradient(145deg, #2a2a2a, #1a1a1a)';
-                              e.currentTarget.style.borderColor = '#3a3a3a';
-                              e.currentTarget.style.boxShadow = 'none';
-                            }
-                          }}
-                        >
-                          {count === 'one' ? '1 Rune' : 
-                           count === 'two' ? '2 Runes' : 
-                           count === 'three' ? '3 Runes' : '5 Runes'}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <button className="pull-button" onClick={runeCount === 'one' ? pullDailyRune : pullMultipleRunes}>
-                    Pull Another {runeCount === 'one' ? 'Rune' : `${runeCount === 'two' ? 'Two' : runeCount === 'three' ? 'Three' : 'Five'} Runes`}
-                  </button>
-                </>
-              )}
+              ))}
             </div>
-          )}
-        </div>
-      )}
+          </div>
+        )}
 
       {activeTab === 'lookup' && (
         <div 
@@ -893,122 +787,6 @@ function App() {
           </div>
         </div>
       )}
-
-      {activeTab === 'horizontalpull' && (
-        <div style={{ maxWidth: '1200px', marginLeft: 'auto', marginRight: 'auto' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '2rem', gap: '1.5rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap', marginBottom: '1.5rem', marginTop: 0 }}>
-                {(['one', 'two', 'three', 'five'] as const).map((count) => (
-                  <button
-                    key={count}
-                    onClick={() => {
-                      setHorizontalRuneCount(count);
-                      setHorizontalPulledRunes([]);
-                      setHorizontalRevealedRunes(0);
-                    }}
-                    style={{
-                      background: horizontalRuneCount === count 
-                        ? 'linear-gradient(145deg, #4a5568, #2d3748)' 
-                        : 'linear-gradient(145deg, #2a2a2a, #1a1a1a)',
-                      color: '#e8f4fd',
-                      border: horizontalRuneCount === count ? '2px solid #63b3ed' : '2px solid #3a3a3a',
-                      borderRadius: '8px',
-                      padding: '0.75rem 1.5rem',
-                      fontSize: '1rem',
-                      cursor: 'pointer',
-                      transition: 'all 0.3s ease',
-                      boxShadow: horizontalRuneCount === count ? '0 0 15px rgba(99, 179, 237, 0.3)' : 'none',
-                      minWidth: '120px'
-                    }}
-                    onMouseEnter={(e) => {
-                      if (horizontalRuneCount !== count) {
-                        e.currentTarget.style.background = 'linear-gradient(145deg, #3a3a3a, #2a2a2a)';
-                        e.currentTarget.style.borderColor = '#4a5568';
-                        e.currentTarget.style.boxShadow = '0 0 10px rgba(99, 179, 237, 0.2)';
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (horizontalRuneCount !== count) {
-                        e.currentTarget.style.background = 'linear-gradient(145deg, #2a2a2a, #1a1a1a)';
-                        e.currentTarget.style.borderColor = '#3a3a3a';
-                        e.currentTarget.style.boxShadow = 'none';
-                      }
-                    }}
-                  >
-                    {count === 'one' ? '1 Rune' : 
-                     count === 'two' ? '2 Runes' : 
-                     count === 'three' ? '3 Runes' : '5 Runes'}
-                  </button>
-                ))}
-              </div>
-              {/* Context-sensitive main action button */}
-              {horizontalPulledRunes.length === 0 ? (
-                <button className="pull-button" style={{ marginBottom: '1.5rem', marginTop: 0 }} onClick={pullHorizontalRunes}>
-                  Pull {horizontalRuneCount === 'one' ? 'Rune' : horizontalRuneCount === 'two' ? 'Two Runes' : horizontalRuneCount === 'three' ? 'Three Runes' : 'Five Runes'}
-                </button>
-              ) : horizontalRevealedRunes < horizontalPulledRunes.length ? (
-                <button className="pull-button" style={{ marginBottom: '1.5rem', marginTop: 0 }} onClick={revealNextHorizontalRune}>
-                  Reveal Next Rune ({horizontalRevealedRunes + 1} of {horizontalPulledRunes.length})
-                </button>
-              ) : null}
-            </div>
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-                gap: '2rem',
-                justifyContent: 'center',
-                marginTop: '2rem',
-                marginBottom: '2rem',
-                maxWidth: '100%'
-              }}
-            >
-              {horizontalPulledRunes.map((rune, index) => (
-                <div
-                  key={index}
-                  style={{
-                    background: 'linear-gradient(145deg, #3a3a3a, #2a2a2a)',
-                    border: '2px solid #4a5568',
-                    borderRadius: '12px',
-                    padding: '1.5rem',
-                    textAlign: 'center',
-                    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)',
-                    transition: 'all 0.3s ease',
-                    minHeight: '200px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    maxWidth: '350px',
-                    marginLeft: 'auto',
-                    marginRight: 'auto'
-                  }}
-                >
-                  {index < horizontalRevealedRunes ? (
-                    <>
-                      <span className="rune-symbol" style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>{rune.symbol}</span>
-                      <h3 className="rune-name" style={{ fontSize: '1.3rem', marginBottom: '0.5rem' }}>{rune.name}</h3>
-                      <p className="rune-meaning" style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
-                        <strong>{rune.meaning}</strong>
-                      </p>
-                      <p className="rune-meaning" style={{ fontSize: '0.9rem', lineHeight: '1.4' }}>
-                        {rune.description}
-                      </p>
-                    </>
-                  ) : (
-                    <>
-                      <span className="rune-symbol" style={{ fontSize: '3.5rem', opacity: 0.3, marginBottom: '1rem' }}>?</span>
-                      <h3 className="rune-name" style={{ fontSize: '1.3rem', opacity: 0.3, marginBottom: '0.5rem' }}>Hidden</h3>
-                      <p style={{ fontSize: '1rem', color: '#a0aec0', fontStyle: 'italic' }}>
-                        Click "Reveal Next Rune" to uncover this rune
-                      </p>
-                    </>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
 
       {/* Enlarged Image Modal */}
       {enlargedImage && (
