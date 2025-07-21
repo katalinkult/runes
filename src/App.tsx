@@ -401,7 +401,11 @@ function App() {
               <button className="pull-button" style={{ marginBottom: '1.5rem', marginTop: 0 }} onClick={revealNextHorizontalRune}>
                 Reveal Next Rune ({horizontalRevealedRunes + 1} of {horizontalPulledRunes.length})
               </button>
-            ) : null}
+            ) : (
+              <button className="pull-button" style={{ marginBottom: '1.5rem', marginTop: 0 }} onClick={pullHorizontalRunes}>
+                Pull Another {horizontalRuneCount === 'one' ? 'Rune' : horizontalRuneCount === 'two' ? 'Two Runes' : horizontalRuneCount === 'three' ? 'Three Runes' : 'Five Runes'}
+              </button>
+            )}
           </div>
           {/* Custom layout for 5 runes */}
           {horizontalPulledRunes.length === 5 ? (
