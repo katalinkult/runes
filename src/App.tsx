@@ -3,7 +3,7 @@ import { runes, getRandomRune, Rune } from './data/runes';
 import { BookOpen, Sparkles, Search } from 'lucide-react';
 
 function App() {
-  const [activeTab, setActiveTab] = useState<'dictionary' | 'daily' | 'lookup' | 'bindrunes' | 'wyrd'>('dictionary');
+  const [activeTab, setActiveTab] = useState<'dictionary' | 'daily' | 'lookup' | 'bindrunes' | 'wyrd' | 'horizontalpull'>('dictionary');
   const [dailyRune, setDailyRune] = useState<Rune | null>(null);
   const [selectedRunes, setSelectedRunes] = useState<Rune[]>([]);
   const [revealedRunes, setRevealedRunes] = useState<Rune[]>([]);
@@ -12,6 +12,11 @@ function App() {
   const [selectedLookupRune, setSelectedLookupRune] = useState<Rune | null>(null);
   const [dictionarySearch, setDictionarySearch] = useState('');
   const [enlargedImage, setEnlargedImage] = useState<string | null>(null);
+
+  // New state for horizontal pull
+  const [horizontalRuneCount, setHorizontalRuneCount] = useState<'one' | 'two' | 'three' | 'five'>('one');
+  const [horizontalPulledRunes, setHorizontalPulledRunes] = useState<Rune[]>([]);
+  const [horizontalRevealedRunes, setHorizontalRevealedRunes] = useState<number>(0);
 
   const runeDrawingContainerRef = useRef<HTMLDivElement>(null);
   const singleRuneResultRef = useRef<HTMLDivElement>(null);
@@ -71,6 +76,31 @@ function App() {
     setDailyRune(null);
   };
 
+  // New horizontal pull logic
+  const pullHorizontalRunes = () => {
+    const count = parseInt(horizontalRuneCount === 'one' ? '1' : horizontalRuneCount === 'two' ? '2' : horizontalRuneCount === 'three' ? '3' : '5');
+    const newRunes: Rune[] = [];
+    const usedIndices = new Set<number>();
+    while (newRunes.length < count) {
+      const randomIndex = Math.floor(Math.random() * runes.length);
+      if (!usedIndices.has(randomIndex)) {
+        usedIndices.add(randomIndex);
+        newRunes.push(runes[randomIndex]);
+      }
+    }
+    setHorizontalPulledRunes(newRunes);
+    setHorizontalRevealedRunes(0);
+  };
+  const revealNextHorizontalRune = () => {
+    if (horizontalRevealedRunes < horizontalPulledRunes.length) {
+      setHorizontalRevealedRunes((prev) => prev + 1);
+    }
+  };
+  const resetHorizontalRunes = () => {
+    setHorizontalPulledRunes([]);
+    setHorizontalRevealedRunes(0);
+  };
+
   // Scroll to multiple runes container when it appears or changes
   useEffect(() => {
     if (selectedRunes.length > 0 && !dailyRune) {
@@ -78,7 +108,7 @@ function App() {
     }
   }, [selectedRunes, dailyRune]);
 
-  const handleTabChange = (tab: 'dictionary' | 'daily' | 'lookup' | 'bindrunes' | 'wyrd') => {
+  const handleTabChange = (tab: 'dictionary' | 'daily' | 'lookup' | 'bindrunes' | 'wyrd' | 'horizontalpull') => {
     setActiveTab(tab);
     setSelectedLookupRune(null);
     if (tab === 'daily') {
@@ -150,6 +180,14 @@ function App() {
             >
               <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>ᛉ</span>
               <span>Web of Wyrd</span>
+            </button>
+
+            <button
+              className={`nav-button ${activeTab === 'horizontalpull' ? 'active' : ''}`}
+              onClick={() => handleTabChange('horizontalpull')}
+            >
+              <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>⇄</span>
+              <span>Horizontal Pull</span>
             </button>
           </nav>
         </div>
@@ -855,6 +893,122 @@ function App() {
           </div>
         </div>
       )}
+
+      {activeTab === 'horizontalpull' && (
+        <div style={{ maxWidth: '1200px', marginLeft: 'auto', marginRight: 'auto' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '2rem', gap: '1.5rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap', marginBottom: '1.5rem', marginTop: 0 }}>
+                {(['one', 'two', 'three', 'five'] as const).map((count) => (
+                  <button
+                    key={count}
+                    onClick={() => {
+                      setHorizontalRuneCount(count);
+                      setHorizontalPulledRunes([]);
+                      setHorizontalRevealedRunes(0);
+                    }}
+                    style={{
+                      background: horizontalRuneCount === count 
+                        ? 'linear-gradient(145deg, #4a5568, #2d3748)' 
+                        : 'linear-gradient(145deg, #2a2a2a, #1a1a1a)',
+                      color: '#e8f4fd',
+                      border: horizontalRuneCount === count ? '2px solid #63b3ed' : '2px solid #3a3a3a',
+                      borderRadius: '8px',
+                      padding: '0.75rem 1.5rem',
+                      fontSize: '1rem',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                      boxShadow: horizontalRuneCount === count ? '0 0 15px rgba(99, 179, 237, 0.3)' : 'none',
+                      minWidth: '120px'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (horizontalRuneCount !== count) {
+                        e.currentTarget.style.background = 'linear-gradient(145deg, #3a3a3a, #2a2a2a)';
+                        e.currentTarget.style.borderColor = '#4a5568';
+                        e.currentTarget.style.boxShadow = '0 0 10px rgba(99, 179, 237, 0.2)';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (horizontalRuneCount !== count) {
+                        e.currentTarget.style.background = 'linear-gradient(145deg, #2a2a2a, #1a1a1a)';
+                        e.currentTarget.style.borderColor = '#3a3a3a';
+                        e.currentTarget.style.boxShadow = 'none';
+                      }
+                    }}
+                  >
+                    {count === 'one' ? '1 Rune' : 
+                     count === 'two' ? '2 Runes' : 
+                     count === 'three' ? '3 Runes' : '5 Runes'}
+                  </button>
+                ))}
+              </div>
+              {/* Context-sensitive main action button */}
+              {horizontalPulledRunes.length === 0 ? (
+                <button className="pull-button" style={{ marginBottom: '1.5rem', marginTop: 0 }} onClick={pullHorizontalRunes}>
+                  Pull {horizontalRuneCount === 'one' ? 'Rune' : horizontalRuneCount === 'two' ? 'Two Runes' : horizontalRuneCount === 'three' ? 'Three Runes' : 'Five Runes'}
+                </button>
+              ) : horizontalRevealedRunes < horizontalPulledRunes.length ? (
+                <button className="pull-button" style={{ marginBottom: '1.5rem', marginTop: 0 }} onClick={revealNextHorizontalRune}>
+                  Reveal Next Rune ({horizontalRevealedRunes + 1} of {horizontalPulledRunes.length})
+                </button>
+              ) : null}
+            </div>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                gap: '2rem',
+                justifyContent: 'center',
+                marginTop: '2rem',
+                marginBottom: '2rem',
+                maxWidth: '100%'
+              }}
+            >
+              {horizontalPulledRunes.map((rune, index) => (
+                <div
+                  key={index}
+                  style={{
+                    background: 'linear-gradient(145deg, #3a3a3a, #2a2a2a)',
+                    border: '2px solid #4a5568',
+                    borderRadius: '12px',
+                    padding: '1.5rem',
+                    textAlign: 'center',
+                    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)',
+                    transition: 'all 0.3s ease',
+                    minHeight: '200px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    maxWidth: '350px',
+                    marginLeft: 'auto',
+                    marginRight: 'auto'
+                  }}
+                >
+                  {index < horizontalRevealedRunes ? (
+                    <>
+                      <span className="rune-symbol" style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>{rune.symbol}</span>
+                      <h3 className="rune-name" style={{ fontSize: '1.3rem', marginBottom: '0.5rem' }}>{rune.name}</h3>
+                      <p className="rune-meaning" style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
+                        <strong>{rune.meaning}</strong>
+                      </p>
+                      <p className="rune-meaning" style={{ fontSize: '0.9rem', lineHeight: '1.4' }}>
+                        {rune.description}
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <span className="rune-symbol" style={{ fontSize: '3.5rem', opacity: 0.3, marginBottom: '1rem' }}>?</span>
+                      <h3 className="rune-name" style={{ fontSize: '1.3rem', opacity: 0.3, marginBottom: '0.5rem' }}>Hidden</h3>
+                      <p style={{ fontSize: '1rem', color: '#a0aec0', fontStyle: 'italic' }}>
+                        Click "Reveal Next Rune" to uncover this rune
+                      </p>
+                    </>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
       {/* Enlarged Image Modal */}
       {enlargedImage && (
