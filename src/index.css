@@ -427,4 +427,40 @@ body::before {
     flex-direction: column !important;
     align-items: center;
   }
+}
+
+.three-rune-container {
+  display: flex;
+  justify-content: center;
+}
+
+.three-rune-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 280px);
+  gap: 2rem;
+  justify-content: center;
+}
+
+@media (max-width: 900px) {
+  .three-rune-grid {
+    grid-template-columns: repeat(2, 280px);
+    grid-template-rows: auto auto;
+  }
+  
+  .three-rune-grid > div:nth-child(3) {
+    grid-column: 1 / -1;
+    justify-self: center;
+  }
+}
+
+@media (max-width: 700px) {
+  .three-rune-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+  }
+  
+  .three-rune-grid > div:nth-child(3) {
+    grid-column: 1;
+    justify-self: center;
+  }
 } 

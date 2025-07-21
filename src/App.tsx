@@ -491,6 +491,53 @@ function App() {
                 ))}
               </div>
             </div>
+          ) : horizontalPulledRunes.length === 3 ? (
+            <div className="three-rune-container" style={{ marginTop: '2rem', marginBottom: '2rem' }}>
+              <div className="three-rune-grid">
+                {horizontalPulledRunes.map((rune, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      background: 'linear-gradient(145deg, #3a3a3a, #2a2a2a)',
+                      border: '2px solid #4a5568',
+                      borderRadius: '12px',
+                      padding: '1.5rem',
+                      textAlign: 'center',
+                      boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)',
+                      transition: 'all 0.3s ease',
+                      minHeight: '200px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      maxWidth: '350px',
+                      width: '280px'
+                    }}
+                  >
+                    {index < horizontalRevealedRunes ? (
+                      <>
+                        <span className="rune-symbol" style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>{rune.symbol}</span>
+                        <h3 className="rune-name" style={{ fontSize: '1.3rem', marginBottom: '0.5rem' }}>{rune.name}</h3>
+                        <p className="rune-meaning" style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
+                          <strong>{rune.meaning}</strong>
+                        </p>
+                        <p className="rune-meaning" style={{ fontSize: '0.9rem', lineHeight: '1.4' }}>
+                          {rune.description}
+                        </p>
+                      </>
+                    ) : (
+                      <>
+                        <span className="rune-symbol" style={{ fontSize: '3.5rem', opacity: 0.3, marginBottom: '1rem' }}>?</span>
+                        <h3 className="rune-name" style={{ fontSize: '1.3rem', opacity: 0.3, marginBottom: '0.5rem' }}>Hidden</h3>
+                        <p style={{ fontSize: '1rem', color: '#a0aec0', fontStyle: 'italic' }}>
+                          Click "Reveal Next Rune" to uncover this rune
+                        </p>
+                      </>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
           ) : (
             <div
               style={{
@@ -500,7 +547,10 @@ function App() {
                 justifyContent: 'center',
                 marginTop: '2rem',
                 marginBottom: '2rem',
-                maxWidth: '100%'
+                maxWidth: '100%',
+                width: 'fit-content',
+                marginLeft: 'auto',
+                marginRight: 'auto'
               }}
             >
               {horizontalPulledRunes.map((rune, index) => (
