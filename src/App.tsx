@@ -519,7 +519,7 @@ function App() {
                 {horizontalPulledRunes.length === 5 ? (
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '2rem', marginBottom: '2rem' }}>
                     <div className="five-rune-row" style={{ display: 'flex', justifyContent: 'center', gap: '2rem', marginBottom: '2rem' }}>
-                      {orderedRunes.slice(0, 3).map((rune, displayIndex) => {
+                      {orderedRunes.slice(0, 3).map((rune, _) => {
                         const originalIndex = horizontalPulledRunes.indexOf(rune);
                         return (
                           <div key={originalIndex} style={{
@@ -592,7 +592,7 @@ function App() {
                       })}
                     </div>
                     <div className="five-rune-row" style={{ display: 'flex', justifyContent: 'center', gap: '2rem' }}>
-                      {orderedRunes.slice(3, 5).map((rune, displayIndex) => {
+                      {orderedRunes.slice(3, 5).map((rune, _) => {
                         const originalIndex = horizontalPulledRunes.indexOf(rune);
                         return (
                           <div key={originalIndex + 3} style={{
@@ -668,7 +668,7 @@ function App() {
                 ) : horizontalPulledRunes.length === 3 ? (
                   <div className="three-rune-container" style={{ marginTop: '2rem', marginBottom: '2rem' }}>
                     <div className="three-rune-grid">
-                      {orderedRunes.map((rune, displayIndex) => {
+                      {orderedRunes.map((rune, _) => {
                         const originalIndex = horizontalPulledRunes.indexOf(rune);
                         return (
                           <div
@@ -758,7 +758,7 @@ function App() {
                       marginRight: 'auto'
                     }}
                   >
-                    {orderedRunes.map((rune, displayIndex) => {
+                    {orderedRunes.map((rune, _) => {
                       const originalIndex = horizontalPulledRunes.indexOf(rune);
                       return (
                         <div
@@ -976,7 +976,7 @@ function App() {
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', marginTop: '1rem' }}>
                 <div style={{ textAlign: 'center', padding: '1.5rem', background: 'linear-gradient(145deg, #2a2a2a, #1a1a1a)', borderRadius: '12px', border: '2px solid #3a3a3a' }}>
                   <img 
-                    src="/bindrunethurisazraidho1.png" 
+                  src={`${import.meta.env.BASE_URL}bindrunethurisazraidho1.png`}
                     alt="Thurisaz + Raidho Bindrune" 
                     style={{ 
                       maxWidth: '150px', 
@@ -1003,7 +1003,7 @@ function App() {
                 
                 <div style={{ textAlign: 'center', padding: '1.5rem', background: 'linear-gradient(145deg, #2a2a2a, #1a1a1a)', borderRadius: '12px', border: '2px solid #3a3a3a' }}>
                   <img 
-                    src="/bindruneingwazothala1.png" 
+                   src={`${import.meta.env.BASE_URL}bindruneingwazothala1.png`}
                     alt="Ingwaz + Othala Bindrune" 
                     style={{ 
                       maxWidth: '150px', 
@@ -1097,7 +1097,7 @@ function App() {
                 }}>
                   <div style={{ textAlign: 'center' }}>
                     <img 
-                      src="/webofwyrd1.png" 
+                    src={`${import.meta.env.BASE_URL}webofwyrd1.png`}
                       alt="Web of Wyrd Symbol 1" 
                       style={{
                         width: '200px',
@@ -1121,7 +1121,7 @@ function App() {
                   
                   <div style={{ textAlign: 'center' }}>
                     <img 
-                      src="/webofwyrd2.png" 
+                    src={`${import.meta.env.BASE_URL}webofwyrd2.png`}
                       alt="Web of Wyrd Symbol 2" 
                       style={{
                         width: '200px',
