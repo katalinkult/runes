@@ -443,7 +443,67 @@ function App() {
                 Reveal Next Rune ({horizontalRevealedRunes + 1} of {horizontalPulledRunes.length})
               </button>
             ) : (
-              <button className="pull-button" style={{ marginBottom: '1.5rem', marginTop: 0 }} onClick={pullHorizontalRunes}>
+              <button 
+                className="pull-button" 
+                style={{ 
+                  marginBottom: '1.5rem',
+                  marginTop: 0,
+                  background: 'linear-gradient(145deg, #1a1a1a, #0f0f0f)',
+                  border: '2px solid #2a2a2a',
+                  color: '#e8f4fd',
+                  fontSize: '1.2rem',
+                  fontWeight: '600',
+                  padding: '1.2rem 2.5rem',
+                  borderRadius: '8px',
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
+                  textShadow: '0 0 8px rgba(232, 244, 253, 0.3)',
+                  transition: 'all 0.4s ease',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  fontFamily: 'Cinzel, serif',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.15em',
+                  cursor: 'pointer'
+                }} 
+                onClick={pullHorizontalRunes}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'linear-gradient(145deg, #2a2a2a, #1a1a1a)';
+                  e.currentTarget.style.borderColor = '#3a3a3a';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(0, 0, 0, 0.5), 0 0 20px rgba(232, 244, 253, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)';
+                  e.currentTarget.style.textShadow = '0 0 12px rgba(232, 244, 253, 0.5)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'linear-gradient(145deg, #1a1a1a, #0f0f0f)';
+                  e.currentTarget.style.borderColor = '#2a2a2a';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05)';
+                  e.currentTarget.style.textShadow = '0 0 8px rgba(232, 244, 253, 0.3)';
+                }}
+              >
+                <span style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: '-100%',
+                  width: '100%',
+                  height: '100%',
+                  background: 'linear-gradient(90deg, transparent, rgba(232, 244, 253, 0.1), transparent)',
+                  transition: 'left 0.5s ease',
+                  pointerEvents: 'none'
+                }} />
+                <span style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  fontSize: '1.5rem',
+                  opacity: 0.1,
+                  color: '#e8f4fd',
+                  pointerEvents: 'none',
+                  fontFamily: 'Cinzel, serif'
+                }}>
+                  ᛟ
+                </span>
                 Pull Another {horizontalRuneCount === 'one' ? 'Rune' : horizontalRuneCount === 'two' ? 'Two Runes' : horizontalRuneCount === 'three' ? 'Three Runes' : 'Five Runes'}
               </button>
             )}
