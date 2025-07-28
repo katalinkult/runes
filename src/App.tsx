@@ -540,7 +540,7 @@ function App() {
                             marginRight: 'auto',
                             position: 'relative'
                           }}>
-                            {originalIndex < horizontalRevealedRunes && (
+                            {originalIndex < horizontalRevealedRunes && horizontalPulledRunes.length > 1 && (
                               <div style={{
                                 position: 'absolute',
                                 top: '-10px',
@@ -613,7 +613,7 @@ function App() {
                             marginRight: 'auto',
                             position: 'relative'
                           }}>
-                            {originalIndex < horizontalRevealedRunes && (
+                            {originalIndex < horizontalRevealedRunes && horizontalPulledRunes.length > 1 && (
                               <div style={{
                                 position: 'absolute',
                                 top: '-10px',
@@ -691,7 +691,7 @@ function App() {
                               position: 'relative'
                             }}
                           >
-                            {originalIndex < horizontalRevealedRunes && (
+                            {originalIndex < horizontalRevealedRunes && horizontalPulledRunes.length > 1 && (
                               <div style={{
                                 position: 'absolute',
                                 top: '-10px',
@@ -782,7 +782,7 @@ function App() {
                             position: 'relative'
                           }}
                         >
-                          {originalIndex < horizontalRevealedRunes && (
+                          {originalIndex < horizontalRevealedRunes && horizontalPulledRunes.length > 1 && (
                             <div style={{
                               position: 'absolute',
                               top: '-10px',
