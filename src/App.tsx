@@ -1221,15 +1221,19 @@ function App() {
             alignItems: 'center',
             justifyContent: 'center',
             zIndex: 2000,
-            backdropFilter: 'blur(5px)'
+            backdropFilter: 'blur(5px)',
+            padding: '20px'
           }}
           onClick={closeEnlargedImage}
         >
           <div 
             style={{
               position: 'relative',
-              maxWidth: '90vw',
-              maxHeight: '90vh'
+              maxWidth: 'calc(100vw - 40px)',
+              maxHeight: 'calc(100vh - 40px)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
             }}
             onClick={(e) => e.stopPropagation()}
           >
@@ -1239,6 +1243,8 @@ function App() {
               style={{
                 maxWidth: '100%',
                 maxHeight: '100%',
+                width: 'auto',
+                height: 'auto',
                 objectFit: 'contain',
                 borderRadius: '12px',
                 boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)'
@@ -1248,28 +1254,31 @@ function App() {
               onClick={closeEnlargedImage}
               style={{
                 position: 'absolute',
-                top: '-40px',
+                top: '-45px',
                 right: '0',
                 background: 'rgba(232, 244, 253, 0.1)',
                 border: '1px solid rgba(232, 244, 253, 0.3)',
                 borderRadius: '50%',
-                width: '30px',
-                height: '30px',
+                width: '35px',
+                height: '35px',
                 color: '#e8f4fd',
                 cursor: 'pointer',
-                fontSize: '1.2rem',
+                fontSize: '1.3rem',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                transition: 'all 0.2s ease'
+                transition: 'all 0.2s ease',
+                zIndex: 2001
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = 'rgba(232, 244, 253, 0.2)';
                 e.currentTarget.style.borderColor = 'rgba(232, 244, 253, 0.5)';
+                e.currentTarget.style.transform = 'scale(1.1)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = 'rgba(232, 244, 253, 0.1)';
                 e.currentTarget.style.borderColor = 'rgba(232, 244, 253, 0.3)';
+                e.currentTarget.style.transform = 'scale(1)';
               }}
             >
               ×
