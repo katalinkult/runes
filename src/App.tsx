@@ -152,10 +152,8 @@ function App() {
   const handleTabChange = (tab: 'dictionary' | 'lookup' | 'bindrunes' | 'wyrd' | 'randompull' | 'history') => {
     setActiveTab(tab);
     setSelectedLookupRune(null);
-    if (tab === 'randompull') {
-      // Scroll to the rune drawing container
-      scrollToContainer(runeDrawingContainerRef);
-    }
+    // Scroll to top for all tabs
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleRuneClick = (rune: Rune) => {
