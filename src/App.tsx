@@ -1229,8 +1229,8 @@ function App() {
           <div 
             style={{
               position: 'relative',
-              maxWidth: 'min(90vw, 1200px)',
-              maxHeight: 'min(90vh, 800px)',
+              maxWidth: 'min(95vw, 1600px)',
+              maxHeight: 'min(95vh, 1000px)',
               width: 'fit-content',
               height: 'fit-content',
               display: 'flex',
