@@ -157,14 +157,29 @@ function App() {
     setSelectedLookupRune(null);
     // Close mobile menu if open
     setIsMobileMenuOpen(false);
-    // Scroll to top for all tabs with a small delay to ensure menu closes first
+    // Immediately scroll to top, then force it again
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    // Additional scroll attempts to ensure it works
     setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }, 50);
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'auto' });
     }, 100);
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }, 200);
   };
 
   const handleRuneClick = (rune: Rune) => {
     setSelectedLookupRune(rune);
+    // Scroll to top when a rune is selected, especially important on mobile
+    if (isMobile) {
+      window.scrollTo({ top: 0, behavior: 'auto' });
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'auto' });
+      }, 50);
+    }
   };
 
   const closeLookupRune = () => {
@@ -188,7 +203,7 @@ function App() {
           <h1 className="app-title">Elder Futhark Runes</h1>
           
           {isMobile ? (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <>
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 style={{
@@ -206,7 +221,8 @@ function App() {
                   gap: '0.5rem',
                   fontFamily: 'Cinzel, serif',
                   textTransform: 'uppercase',
-                  letterSpacing: '0.1em'
+                  letterSpacing: '0.1em',
+                  zIndex: 1001
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.background = 'linear-gradient(145deg, #3a3a3a, #2a2a2a)';
@@ -223,8 +239,8 @@ function App() {
               
               {isMobileMenuOpen && (
                 <nav className="top-nav" style={{ 
-                  position: 'absolute', 
-                  top: '100%', 
+                  position: 'fixed', 
+                  top: '140px', 
                   left: 0, 
                   right: 0,
                   background: 'rgba(15, 15, 15, 0.95)',
@@ -303,7 +319,7 @@ function App() {
                   </button>
                 </nav>
               )}
-            </div>
+            </>
           ) : (
             <nav className="top-nav">
               <button
@@ -1380,16 +1396,16 @@ function App() {
               onClick={closeEnlargedImage}
               style={{
                 position: 'absolute',
-                top: '-30px',
-                right: '-30px',
+                top: isMobile ? '-50px' : '-60px',
+                right: isMobile ? '0px' : '0px',
                 background: 'rgba(232, 244, 253, 0.1)',
                 border: '1px solid rgba(232, 244, 253, 0.3)',
                 borderRadius: '50%',
-                width: '35px',
-                height: '35px',
+                width: isMobile ? '40px' : '35px',
+                height: isMobile ? '40px' : '35px',
                 color: '#e8f4fd',
                 cursor: 'pointer',
-                fontSize: '1.3rem',
+                fontSize: isMobile ? '1.5rem' : '1.3rem',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
