@@ -985,7 +985,7 @@ function App() {
                       cursor: 'pointer',
                       transition: 'transform 0.2s ease'
                     }}
-                    onClick={() => setEnlargedImage('/bindrunethurisazraidho1.png')}
+                    onClick={() => setEnlargedImage(`${import.meta.env.BASE_URL}bindrunethurisazraidho1.png`)}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.transform = 'scale(1.05)';
                     }}
@@ -1012,7 +1012,7 @@ function App() {
                       cursor: 'pointer',
                       transition: 'transform 0.2s ease'
                     }}
-                    onClick={() => setEnlargedImage('/bindruneingwazothala1.png')}
+                    onClick={() => setEnlargedImage(`${import.meta.env.BASE_URL}bindruneingwazothala1.png`)}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.transform = 'scale(1.05)';
                     }}
@@ -1108,7 +1108,7 @@ function App() {
                         borderRadius: '8px',
                         border: '2px solid #3a3a3a'
                       }}
-                      onClick={() => setEnlargedImage('/webofwyrd1.png')}
+                      onClick={() => setEnlargedImage(`${import.meta.env.BASE_URL}webofwyrd1.png`)}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.transform = 'scale(1.05)';
                       }}
@@ -1132,7 +1132,7 @@ function App() {
                         borderRadius: '8px',
                         border: '2px solid #3a3a3a'
                       }}
-                      onClick={() => setEnlargedImage('/webofwyrd2.png')}
+                      onClick={() => setEnlargedImage(`${import.meta.env.BASE_URL}webofwyrd2.png`)}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.transform = 'scale(1.05)';
                       }}
