@@ -230,7 +230,7 @@ function App() {
                   borderTop: '1px solid #3a3a3a',
                   padding: '1rem',
                   display: 'flex',
-                  flexDirection: 'column',
+                  flexWrap: 'wrap',
                   gap: '0.5rem',
                   zIndex: 1000
                 }}>
