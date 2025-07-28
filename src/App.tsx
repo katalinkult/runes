@@ -18,9 +18,50 @@ function App() {
   const [horizontalPulledRunes, setHorizontalPulledRunes] = useState<Rune[]>([]);
   const [horizontalRevealedRunes, setHorizontalRevealedRunes] = useState<number>(0);
 
+  // Add state for tracking window size
+  const [isMobile, setIsMobile] = useState(false);
+
   const runeDrawingContainerRef = useRef<HTMLDivElement>(null);
   const singleRuneResultRef = useRef<HTMLDivElement>(null);
   const multipleRunesResultRef = useRef<HTMLDivElement>(null);
+
+  // Effect to track window size
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 700);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Helper function to get runes in mobile-first order
+  const getMobileOrderedRunes = (runes: Rune[], revealedCount: number) => {
+    if (!isMobile || revealedCount === 0) {
+      return runes;
+    }
+    
+    return [...runes].sort((a, b) => {
+      const aIndex = runes.indexOf(a);
+      const bIndex = runes.indexOf(b);
+      const aRevealed = aIndex < revealedCount;
+      const bRevealed = bIndex < revealedCount;
+      
+      // Show revealed runes first, then hidden ones
+      if (aRevealed && !bRevealed) return -1;
+      if (!aRevealed && bRevealed) return 1;
+      
+      // Among revealed runes, show most recently revealed first
+      if (aRevealed && bRevealed) {
+        return bIndex - aIndex; // Most recent first
+      }
+      
+      // Among hidden runes, keep original order
+      return aIndex - bIndex;
+    });
+  };
 
   const scrollToContainer = (ref: React.RefObject<HTMLDivElement>) => {
     setTimeout(() => {
@@ -407,201 +448,223 @@ function App() {
               </button>
             )}
           </div>
-          {/* Custom layout for 5 runes */}
-          {horizontalPulledRunes.length === 5 ? (
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '2rem', marginBottom: '2rem' }}>
-              <div className="five-rune-row" style={{ display: 'flex', justifyContent: 'center', gap: '2rem', marginBottom: '2rem' }}>
-                {horizontalPulledRunes.slice(0, 3).map((rune, index) => (
-                  <div key={index} style={{
-                    background: 'linear-gradient(145deg, #3a3a3a, #2a2a2a)',
-                    border: '2px solid #4a5568',
-                    borderRadius: '12px',
-                    padding: '1.5rem',
-                    textAlign: 'center',
-                    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)',
-                    transition: 'all 0.3s ease',
-                    minHeight: '200px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    maxWidth: '350px',
-                    marginLeft: 'auto',
-                    marginRight: 'auto'
-                  }}>
-                    {index < horizontalRevealedRunes ? (
-                      <>
-                        <span className="rune-symbol" style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>{rune.symbol}</span>
-                        <h3 className="rune-name" style={{ fontSize: '1.3rem', marginBottom: '0.5rem' }}>{rune.name}</h3>
-                        <p className="rune-meaning" style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
-                          <strong>{rune.meaning}</strong>
-                        </p>
-                        <p className="rune-meaning" style={{ fontSize: '0.9rem', lineHeight: '1.4' }}>
-                          {rune.description}
-                        </p>
-                      </>
-                    ) : (
-                      <>
-                        <span className="rune-symbol" style={{ fontSize: '3.5rem', opacity: 0.3, marginBottom: '1rem' }}>?</span>
-                        <h3 className="rune-name" style={{ fontSize: '1.3rem', opacity: 0.3, marginBottom: '0.5rem' }}>Hidden</h3>
-                        <p style={{ fontSize: '1rem', color: '#a0aec0', fontStyle: 'italic' }}>
-                          Click "Reveal Next Rune" to uncover this rune
-                        </p>
-                      </>
-                    )}
+          
+          {/* Get ordered runes for display */}
+          {(() => {
+            const orderedRunes = getMobileOrderedRunes(horizontalPulledRunes, horizontalRevealedRunes);
+            
+            return (
+              <>
+                {/* Custom layout for 5 runes */}
+                {horizontalPulledRunes.length === 5 ? (
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '2rem', marginBottom: '2rem' }}>
+                    <div className="five-rune-row" style={{ display: 'flex', justifyContent: 'center', gap: '2rem', marginBottom: '2rem' }}>
+                      {orderedRunes.slice(0, 3).map((rune, displayIndex) => {
+                        const originalIndex = horizontalPulledRunes.indexOf(rune);
+                        return (
+                          <div key={originalIndex} style={{
+                            background: 'linear-gradient(145deg, #3a3a3a, #2a2a2a)',
+                            border: '2px solid #4a5568',
+                            borderRadius: '12px',
+                            padding: '1.5rem',
+                            textAlign: 'center',
+                            boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)',
+                            transition: 'all 0.3s ease',
+                            minHeight: '200px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            maxWidth: '350px',
+                            marginLeft: 'auto',
+                            marginRight: 'auto'
+                          }}>
+                            {originalIndex < horizontalRevealedRunes ? (
+                              <>
+                                <span className="rune-symbol" style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>{rune.symbol}</span>
+                                <h3 className="rune-name" style={{ fontSize: '1.3rem', marginBottom: '0.5rem' }}>{rune.name}</h3>
+                                <p className="rune-meaning" style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
+                                  <strong>{rune.meaning}</strong>
+                                </p>
+                                <p className="rune-meaning" style={{ fontSize: '0.9rem', lineHeight: '1.4' }}>
+                                  {rune.description}
+                                </p>
+                              </>
+                            ) : (
+                              <>
+                                <span className="rune-symbol" style={{ fontSize: '3.5rem', opacity: 0.3, marginBottom: '1rem' }}>?</span>
+                                <h3 className="rune-name" style={{ fontSize: '1.3rem', opacity: 0.3, marginBottom: '0.5rem' }}>Hidden</h3>
+                                <p style={{ fontSize: '1rem', color: '#a0aec0', fontStyle: 'italic' }}>
+                                  Click "Reveal Next Rune" to uncover this rune
+                                </p>
+                              </>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                    <div className="five-rune-row" style={{ display: 'flex', justifyContent: 'center', gap: '2rem' }}>
+                      {orderedRunes.slice(3, 5).map((rune, displayIndex) => {
+                        const originalIndex = horizontalPulledRunes.indexOf(rune);
+                        return (
+                          <div key={originalIndex + 3} style={{
+                            background: 'linear-gradient(145deg, #3a3a3a, #2a2a2a)',
+                            border: '2px solid #4a5568',
+                            borderRadius: '12px',
+                            padding: '1.5rem',
+                            textAlign: 'center',
+                            boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)',
+                            transition: 'all 0.3s ease',
+                            minHeight: '200px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            maxWidth: '350px',
+                            marginLeft: 'auto',
+                            marginRight: 'auto'
+                          }}>
+                            {originalIndex < horizontalRevealedRunes ? (
+                              <>
+                                <span className="rune-symbol" style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>{rune.symbol}</span>
+                                <h3 className="rune-name" style={{ fontSize: '1.3rem', marginBottom: '0.5rem' }}>{rune.name}</h3>
+                                <p className="rune-meaning" style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
+                                  <strong>{rune.meaning}</strong>
+                                </p>
+                                <p className="rune-meaning" style={{ fontSize: '0.9rem', lineHeight: '1.4' }}>
+                                  {rune.description}
+                                </p>
+                              </>
+                            ) : (
+                              <>
+                                <span className="rune-symbol" style={{ fontSize: '3.5rem', opacity: 0.3, marginBottom: '1rem' }}>?</span>
+                                <h3 className="rune-name" style={{ fontSize: '1.3rem', opacity: 0.3, marginBottom: '0.5rem' }}>Hidden</h3>
+                                <p style={{ fontSize: '1rem', color: '#a0aec0', fontStyle: 'italic' }}>
+                                  Click "Reveal Next Rune" to uncover this rune
+                                </p>
+                              </>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
-                ))}
-              </div>
-              <div className="five-rune-row" style={{ display: 'flex', justifyContent: 'center', gap: '2rem' }}>
-                {horizontalPulledRunes.slice(3, 5).map((rune, index) => (
-                  <div key={index + 3} style={{
-                    background: 'linear-gradient(145deg, #3a3a3a, #2a2a2a)',
-                    border: '2px solid #4a5568',
-                    borderRadius: '12px',
-                    padding: '1.5rem',
-                    textAlign: 'center',
-                    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)',
-                    transition: 'all 0.3s ease',
-                    minHeight: '200px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    maxWidth: '350px',
-                    marginLeft: 'auto',
-                    marginRight: 'auto'
-                  }}>
-                    {index + 3 < horizontalRevealedRunes ? (
-                      <>
-                        <span className="rune-symbol" style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>{rune.symbol}</span>
-                        <h3 className="rune-name" style={{ fontSize: '1.3rem', marginBottom: '0.5rem' }}>{rune.name}</h3>
-                        <p className="rune-meaning" style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
-                          <strong>{rune.meaning}</strong>
-                        </p>
-                        <p className="rune-meaning" style={{ fontSize: '0.9rem', lineHeight: '1.4' }}>
-                          {rune.description}
-                        </p>
-                      </>
-                    ) : (
-                      <>
-                        <span className="rune-symbol" style={{ fontSize: '3.5rem', opacity: 0.3, marginBottom: '1rem' }}>?</span>
-                        <h3 className="rune-name" style={{ fontSize: '1.3rem', opacity: 0.3, marginBottom: '0.5rem' }}>Hidden</h3>
-                        <p style={{ fontSize: '1rem', color: '#a0aec0', fontStyle: 'italic' }}>
-                          Click "Reveal Next Rune" to uncover this rune
-                        </p>
-                      </>
-                    )}
+                ) : horizontalPulledRunes.length === 3 ? (
+                  <div className="three-rune-container" style={{ marginTop: '2rem', marginBottom: '2rem' }}>
+                    <div className="three-rune-grid">
+                      {orderedRunes.map((rune, displayIndex) => {
+                        const originalIndex = horizontalPulledRunes.indexOf(rune);
+                        return (
+                          <div
+                            key={originalIndex}
+                            style={{
+                              background: 'linear-gradient(145deg, #3a3a3a, #2a2a2a)',
+                              border: '2px solid #4a5568',
+                              borderRadius: '12px',
+                              padding: '1.5rem',
+                              textAlign: 'center',
+                              boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)',
+                              transition: 'all 0.3s ease',
+                              minHeight: '200px',
+                              display: 'flex',
+                              flexDirection: 'column',
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                              maxWidth: '350px',
+                              width: '280px'
+                            }}
+                          >
+                            {originalIndex < horizontalRevealedRunes ? (
+                              <>
+                                <span className="rune-symbol" style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>{rune.symbol}</span>
+                                <h3 className="rune-name" style={{ fontSize: '1.3rem', marginBottom: '0.5rem' }}>{rune.name}</h3>
+                                <p className="rune-meaning" style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
+                                  <strong>{rune.meaning}</strong>
+                                </p>
+                                <p className="rune-meaning" style={{ fontSize: '0.9rem', lineHeight: '1.4' }}>
+                                  {rune.description}
+                                </p>
+                              </>
+                            ) : (
+                              <>
+                                <span className="rune-symbol" style={{ fontSize: '3.5rem', opacity: 0.3, marginBottom: '1rem' }}>?</span>
+                                <h3 className="rune-name" style={{ fontSize: '1.3rem', opacity: 0.3, marginBottom: '0.5rem' }}>Hidden</h3>
+                                <p style={{ fontSize: '1rem', color: '#a0aec0', fontStyle: 'italic' }}>
+                                  Click "Reveal Next Rune" to uncover this rune
+                                </p>
+                              </>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
-                ))}
-              </div>
-            </div>
-          ) : horizontalPulledRunes.length === 3 ? (
-            <div className="three-rune-container" style={{ marginTop: '2rem', marginBottom: '2rem' }}>
-              <div className="three-rune-grid">
-                {horizontalPulledRunes.map((rune, index) => (
+                ) : (
                   <div
-                    key={index}
                     style={{
-                      background: 'linear-gradient(145deg, #3a3a3a, #2a2a2a)',
-                      border: '2px solid #4a5568',
-                      borderRadius: '12px',
-                      padding: '1.5rem',
-                      textAlign: 'center',
-                      boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)',
-                      transition: 'all 0.3s ease',
-                      minHeight: '200px',
-                      display: 'flex',
-                      flexDirection: 'column',
+                      display: 'grid',
+                      gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                      gap: '2rem',
                       justifyContent: 'center',
-                      alignItems: 'center',
-                      maxWidth: '350px',
-                      width: '280px'
+                      marginTop: '2rem',
+                      marginBottom: '2rem',
+                      maxWidth: '100%',
+                      width: 'fit-content',
+                      marginLeft: 'auto',
+                      marginRight: 'auto'
                     }}
                   >
-                    {index < horizontalRevealedRunes ? (
-                      <>
-                        <span className="rune-symbol" style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>{rune.symbol}</span>
-                        <h3 className="rune-name" style={{ fontSize: '1.3rem', marginBottom: '0.5rem' }}>{rune.name}</h3>
-                        <p className="rune-meaning" style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
-                          <strong>{rune.meaning}</strong>
-                        </p>
-                        <p className="rune-meaning" style={{ fontSize: '0.9rem', lineHeight: '1.4' }}>
-                          {rune.description}
-                        </p>
-                      </>
-                    ) : (
-                      <>
-                        <span className="rune-symbol" style={{ fontSize: '3.5rem', opacity: 0.3, marginBottom: '1rem' }}>?</span>
-                        <h3 className="rune-name" style={{ fontSize: '1.3rem', opacity: 0.3, marginBottom: '0.5rem' }}>Hidden</h3>
-                        <p style={{ fontSize: '1rem', color: '#a0aec0', fontStyle: 'italic' }}>
-                          Click "Reveal Next Rune" to uncover this rune
-                        </p>
-                      </>
-                    )}
+                    {orderedRunes.map((rune, displayIndex) => {
+                      const originalIndex = horizontalPulledRunes.indexOf(rune);
+                      return (
+                        <div
+                          key={originalIndex}
+                          style={{
+                            background: 'linear-gradient(145deg, #3a3a3a, #2a2a2a)',
+                            border: '2px solid #4a5568',
+                            borderRadius: '12px',
+                            padding: '1.5rem',
+                            textAlign: 'center',
+                            boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)',
+                            transition: 'all 0.3s ease',
+                            minHeight: '200px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            maxWidth: '350px',
+                            marginLeft: 'auto',
+                            marginRight: 'auto'
+                          }}
+                        >
+                          {originalIndex < horizontalRevealedRunes ? (
+                            <>
+                              <span className="rune-symbol" style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>{rune.symbol}</span>
+                              <h3 className="rune-name" style={{ fontSize: '1.3rem', marginBottom: '0.5rem' }}>{rune.name}</h3>
+                              <p className="rune-meaning" style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
+                                <strong>{rune.meaning}</strong>
+                              </p>
+                              <p className="rune-meaning" style={{ fontSize: '0.9rem', lineHeight: '1.4' }}>
+                                {rune.description}
+                              </p>
+                            </>
+                          ) : (
+                            <>
+                              <span className="rune-symbol" style={{ fontSize: '3.5rem', opacity: 0.3, marginBottom: '1rem' }}>?</span>
+                              <h3 className="rune-name" style={{ fontSize: '1.3rem', opacity: 0.3, marginBottom: '0.5rem' }}>Hidden</h3>
+                              <p style={{ fontSize: '1rem', color: '#a0aec0', fontStyle: 'italic' }}>
+                                Click "Reveal Next Rune" to uncover this rune
+                              </p>
+                            </>
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
-                ))}
-              </div>
-            </div>
-          ) : (
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-                gap: '2rem',
-                justifyContent: 'center',
-                marginTop: '2rem',
-                marginBottom: '2rem',
-                maxWidth: '100%',
-                width: 'fit-content',
-                marginLeft: 'auto',
-                marginRight: 'auto'
-              }}
-            >
-              {horizontalPulledRunes.map((rune, index) => (
-                <div
-                  key={index}
-                  style={{
-                    background: 'linear-gradient(145deg, #3a3a3a, #2a2a2a)',
-                    border: '2px solid #4a5568',
-                    borderRadius: '12px',
-                    padding: '1.5rem',
-                    textAlign: 'center',
-                    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)',
-                    transition: 'all 0.3s ease',
-                    minHeight: '200px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    maxWidth: '350px',
-                    marginLeft: 'auto',
-                    marginRight: 'auto'
-                  }}
-                >
-                  {index < horizontalRevealedRunes ? (
-                    <>
-                      <span className="rune-symbol" style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>{rune.symbol}</span>
-                      <h3 className="rune-name" style={{ fontSize: '1.3rem', marginBottom: '0.5rem' }}>{rune.name}</h3>
-                      <p className="rune-meaning" style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
-                        <strong>{rune.meaning}</strong>
-                      </p>
-                      <p className="rune-meaning" style={{ fontSize: '0.9rem', lineHeight: '1.4' }}>
-                        {rune.description}
-                      </p>
-                    </>
-                  ) : (
-                    <>
-                      <span className="rune-symbol" style={{ fontSize: '3.5rem', opacity: 0.3, marginBottom: '1rem' }}>?</span>
-                      <h3 className="rune-name" style={{ fontSize: '1.3rem', opacity: 0.3, marginBottom: '0.5rem' }}>Hidden</h3>
-                      <p style={{ fontSize: '1rem', color: '#a0aec0', fontStyle: 'italic' }}>
-                        Click "Reveal Next Rune" to uncover this rune
-                      </p>
-                    </>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
+                )}
+              </>
+            );
+          })()}
         </div>
       )}
 
