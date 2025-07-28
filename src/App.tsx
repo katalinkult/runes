@@ -20,6 +20,9 @@ function App() {
 
   // Add state for tracking window size
   const [isMobile, setIsMobile] = useState(false);
+  
+  // Add state for mobile menu
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const runeDrawingContainerRef = useRef<HTMLDivElement>(null);
   const singleRuneResultRef = useRef<HTMLDivElement>(null);
@@ -152,6 +155,8 @@ function App() {
   const handleTabChange = (tab: 'dictionary' | 'lookup' | 'bindrunes' | 'wyrd' | 'randompull' | 'history') => {
     setActiveTab(tab);
     setSelectedLookupRune(null);
+    // Close mobile menu if open
+    setIsMobileMenuOpen(false);
     // Scroll to top for all tabs
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -180,73 +185,192 @@ function App() {
         <div className="top-band-content">
           <h1 className="app-title">Elder Futhark Runes</h1>
           
-          <nav className="top-nav">
-            <button
-              className={`nav-button ${activeTab === 'randompull' ? 'active' : ''}`}
-              onClick={() => handleTabChange('randompull')}
-            >
-              <span style={{
-                fontSize: '1.7rem',
-                fontWeight: 'bold',
-                color: '#e8f4fd',
-                textShadow: '0 0 8px #63b3ed, 0 0 16px #63b3ed',
-                marginRight: '0.5rem',
-                verticalAlign: 'middle',
-                display: 'inline-block',
-                lineHeight: 1
-              }}>ᛟ</span>
-              <span>Pull Random Runes</span>
-            </button>
-            
-            <button
-              className={`nav-button ${activeTab === 'dictionary' ? 'active' : ''}`}
-              onClick={() => handleTabChange('dictionary')}
-            >
-              <BookOpen size={18} />
-              <span>Dictionary</span>
-            </button>
-            
-            <button
-              className={`nav-button ${activeTab === 'lookup' ? 'active' : ''}`}
-              onClick={() => handleTabChange('lookup')}
-            >
-              <Search size={18} />
-              <span>Look up a Rune</span>
-            </button>
-            
-            <button
-              className={`nav-button ${activeTab === 'bindrunes' ? 'active' : ''}`}
-              onClick={() => handleTabChange('bindrunes')}
-            >
-              <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>ᛒ</span>
-              <span>Bindrunes</span>
-            </button>
-            
-            <button
-              className={`nav-button ${activeTab === 'wyrd' ? 'active' : ''}`}
-              onClick={() => handleTabChange('wyrd')}
-            >
-              <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>ᛉ</span>
-              <span>Web of Wyrd</span>
-            </button>
+          {isMobile ? (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                style={{
+                  background: 'linear-gradient(145deg, #2a2a2a, #1a1a1a)',
+                  border: '2px solid #3a3a3a',
+                  borderRadius: '8px',
+                  color: '#e8f4fd',
+                  padding: '0.75rem 1rem',
+                  fontSize: '0.9rem',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  fontFamily: 'Cinzel, serif',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.1em'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'linear-gradient(145deg, #3a3a3a, #2a2a2a)';
+                  e.currentTarget.style.borderColor = '#4a5568';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'linear-gradient(145deg, #2a2a2a, #1a1a1a)';
+                  e.currentTarget.style.borderColor = '#3a3a3a';
+                }}
+              >
+                <span style={{ fontSize: '1.2rem' }}>☰</span>
+                {isMobileMenuOpen ? 'Hide Menu' : 'Show Menu'}
+              </button>
+              
+              {isMobileMenuOpen && (
+                <nav className="top-nav" style={{ 
+                  position: 'absolute', 
+                  top: '100%', 
+                  left: 0, 
+                  right: 0,
+                  background: 'rgba(15, 15, 15, 0.95)',
+                  backdropFilter: 'blur(15px)',
+                  borderTop: '1px solid #3a3a3a',
+                  padding: '1rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '0.5rem',
+                  zIndex: 1000
+                }}>
+                  <button
+                    className={`nav-button ${activeTab === 'randompull' ? 'active' : ''}`}
+                    onClick={() => handleTabChange('randompull')}
+                  >
+                    <span style={{
+                      fontSize: '1.7rem',
+                      fontWeight: 'bold',
+                      color: '#e8f4fd',
+                      textShadow: '0 0 8px #63b3ed, 0 0 16px #63b3ed',
+                      marginRight: '0.5rem',
+                      verticalAlign: 'middle',
+                      display: 'inline-block',
+                      lineHeight: 1
+                    }}>ᛟ</span>
+                    <span>Pull Random Runes</span>
+                  </button>
+                  
+                  <button
+                    className={`nav-button ${activeTab === 'dictionary' ? 'active' : ''}`}
+                    onClick={() => handleTabChange('dictionary')}
+                  >
+                    <BookOpen size={18} />
+                    <span>Dictionary</span>
+                  </button>
+                  
+                  <button
+                    className={`nav-button ${activeTab === 'lookup' ? 'active' : ''}`}
+                    onClick={() => handleTabChange('lookup')}
+                  >
+                    <Search size={18} />
+                    <span>Look up a Rune</span>
+                  </button>
+                  
+                  <button
+                    className={`nav-button ${activeTab === 'bindrunes' ? 'active' : ''}`}
+                    onClick={() => handleTabChange('bindrunes')}
+                  >
+                    <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>ᛒ</span>
+                    <span>Bindrunes</span>
+                  </button>
+                  
+                  <button
+                    className={`nav-button ${activeTab === 'wyrd' ? 'active' : ''}`}
+                    onClick={() => handleTabChange('wyrd')}
+                  >
+                    <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>ᛉ</span>
+                    <span>Web of Wyrd</span>
+                  </button>
 
-            <button
-              className={`nav-button ${activeTab === 'history' ? 'active' : ''}`}
-              onClick={() => handleTabChange('history')}
-            >
-              <span style={{
-                fontSize: '1.5rem',
-                fontWeight: 'bold',
-                color: '#e8f4fd',
-                textShadow: '0 0 8px #63b3ed, 0 0 16px #63b3ed',
-                marginRight: '0.5rem',
-                verticalAlign: 'middle',
-                display: 'inline-block',
-                lineHeight: 1
-              }}>ᚨ</span>
-              <span>History of Runes</span>
-            </button>
-          </nav>
+                  <button
+                    className={`nav-button ${activeTab === 'history' ? 'active' : ''}`}
+                    onClick={() => handleTabChange('history')}
+                  >
+                    <span style={{
+                      fontSize: '1.5rem',
+                      fontWeight: 'bold',
+                      color: '#e8f4fd',
+                      textShadow: '0 0 8px #63b3ed, 0 0 16px #63b3ed',
+                      marginRight: '0.5rem',
+                      verticalAlign: 'middle',
+                      display: 'inline-block',
+                      lineHeight: 1
+                    }}>ᚨ</span>
+                    <span>History of Runes</span>
+                  </button>
+                </nav>
+              )}
+            </div>
+          ) : (
+            <nav className="top-nav">
+              <button
+                className={`nav-button ${activeTab === 'randompull' ? 'active' : ''}`}
+                onClick={() => handleTabChange('randompull')}
+              >
+                <span style={{
+                  fontSize: '1.7rem',
+                  fontWeight: 'bold',
+                  color: '#e8f4fd',
+                  textShadow: '0 0 8px #63b3ed, 0 0 16px #63b3ed',
+                  marginRight: '0.5rem',
+                  verticalAlign: 'middle',
+                  display: 'inline-block',
+                  lineHeight: 1
+                }}>ᛟ</span>
+                <span>Pull Random Runes</span>
+              </button>
+              
+              <button
+                className={`nav-button ${activeTab === 'dictionary' ? 'active' : ''}`}
+                onClick={() => handleTabChange('dictionary')}
+              >
+                <BookOpen size={18} />
+                <span>Dictionary</span>
+              </button>
+              
+              <button
+                className={`nav-button ${activeTab === 'lookup' ? 'active' : ''}`}
+                onClick={() => handleTabChange('lookup')}
+              >
+                <Search size={18} />
+                <span>Look up a Rune</span>
+              </button>
+              
+              <button
+                className={`nav-button ${activeTab === 'bindrunes' ? 'active' : ''}`}
+                onClick={() => handleTabChange('bindrunes')}
+              >
+                <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>ᛒ</span>
+                <span>Bindrunes</span>
+              </button>
+              
+              <button
+                className={`nav-button ${activeTab === 'wyrd' ? 'active' : ''}`}
+                onClick={() => handleTabChange('wyrd')}
+              >
+                <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>ᛉ</span>
+                <span>Web of Wyrd</span>
+              </button>
+
+              <button
+                className={`nav-button ${activeTab === 'history' ? 'active' : ''}`}
+                onClick={() => handleTabChange('history')}
+              >
+                <span style={{
+                  fontSize: '1.5rem',
+                  fontWeight: 'bold',
+                  color: '#e8f4fd',
+                  textShadow: '0 0 8px #63b3ed, 0 0 16px #63b3ed',
+                  marginRight: '0.5rem',
+                  verticalAlign: 'middle',
+                  display: 'inline-block',
+                  lineHeight: 1
+                }}>ᚨ</span>
+                <span>History of Runes</span>
+              </button>
+            </nav>
+          )}
         </div>
       </div>
       
