@@ -1229,8 +1229,10 @@ function App() {
           <div 
             style={{
               position: 'relative',
-              maxWidth: 'calc(100vw - 40px)',
-              maxHeight: 'calc(100vh - 40px)',
+              maxWidth: 'min(90vw, 1200px)',
+              maxHeight: 'min(90vh, 800px)',
+              width: 'fit-content',
+              height: 'fit-content',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center'
