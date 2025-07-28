@@ -537,8 +537,36 @@ function App() {
                             alignItems: 'center',
                             maxWidth: '350px',
                             marginLeft: 'auto',
-                            marginRight: 'auto'
+                            marginRight: 'auto',
+                            position: 'relative'
                           }}>
+                            {originalIndex < horizontalRevealedRunes && (
+                              <div style={{
+                                position: 'absolute',
+                                top: '-10px',
+                                right: '-10px',
+                                background: 'linear-gradient(145deg, #2a2a2a, #1a1a1a)',
+                                border: '2px solid #4a5568',
+                                borderRadius: '50%',
+                                width: '40px',
+                                height: '40px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+                                zIndex: 10
+                              }}>
+                                <span style={{
+                                  color: '#e8f4fd',
+                                  fontSize: '1rem',
+                                  fontWeight: 'bold',
+                                  fontFamily: 'Cinzel, serif',
+                                  textShadow: '0 0 8px rgba(232, 244, 253, 0.3)'
+                                }}>
+                                  {originalIndex + 1}
+                                </span>
+                              </div>
+                            )}
                             {originalIndex < horizontalRevealedRunes ? (
                               <>
                                 <span className="rune-symbol" style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>{rune.symbol}</span>
@@ -582,8 +610,36 @@ function App() {
                             alignItems: 'center',
                             maxWidth: '350px',
                             marginLeft: 'auto',
-                            marginRight: 'auto'
+                            marginRight: 'auto',
+                            position: 'relative'
                           }}>
+                            {originalIndex < horizontalRevealedRunes && (
+                              <div style={{
+                                position: 'absolute',
+                                top: '-10px',
+                                right: '-10px',
+                                background: 'linear-gradient(145deg, #2a2a2a, #1a1a1a)',
+                                border: '2px solid #4a5568',
+                                borderRadius: '50%',
+                                width: '40px',
+                                height: '40px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+                                zIndex: 10
+                              }}>
+                                <span style={{
+                                  color: '#e8f4fd',
+                                  fontSize: '1rem',
+                                  fontWeight: 'bold',
+                                  fontFamily: 'Cinzel, serif',
+                                  textShadow: '0 0 8px rgba(232, 244, 253, 0.3)'
+                                }}>
+                                  {originalIndex + 1}
+                                </span>
+                              </div>
+                            )}
                             {originalIndex < horizontalRevealedRunes ? (
                               <>
                                 <span className="rune-symbol" style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>{rune.symbol}</span>
@@ -631,9 +687,37 @@ function App() {
                               justifyContent: 'center',
                               alignItems: 'center',
                               maxWidth: '350px',
-                              width: '280px'
+                              width: '280px',
+                              position: 'relative'
                             }}
                           >
+                            {originalIndex < horizontalRevealedRunes && (
+                              <div style={{
+                                position: 'absolute',
+                                top: '-10px',
+                                right: '-10px',
+                                background: 'linear-gradient(145deg, #2a2a2a, #1a1a1a)',
+                                border: '2px solid #4a5568',
+                                borderRadius: '50%',
+                                width: '40px',
+                                height: '40px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+                                zIndex: 10
+                              }}>
+                                <span style={{
+                                  color: '#e8f4fd',
+                                  fontSize: '1rem',
+                                  fontWeight: 'bold',
+                                  fontFamily: 'Cinzel, serif',
+                                  textShadow: '0 0 8px rgba(232, 244, 253, 0.3)'
+                                }}>
+                                  {originalIndex + 1}
+                                </span>
+                              </div>
+                            )}
                             {originalIndex < horizontalRevealedRunes ? (
                               <>
                                 <span className="rune-symbol" style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>{rune.symbol}</span>
@@ -694,9 +778,37 @@ function App() {
                             alignItems: 'center',
                             maxWidth: '350px',
                             marginLeft: 'auto',
-                            marginRight: 'auto'
+                            marginRight: 'auto',
+                            position: 'relative'
                           }}
                         >
+                          {originalIndex < horizontalRevealedRunes && (
+                            <div style={{
+                              position: 'absolute',
+                              top: '-10px',
+                              right: '-10px',
+                              background: 'linear-gradient(145deg, #2a2a2a, #1a1a1a)',
+                              border: '2px solid #4a5568',
+                              borderRadius: '50%',
+                              width: '40px',
+                              height: '40px',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+                              zIndex: 10
+                            }}>
+                              <span style={{
+                                color: '#e8f4fd',
+                                fontSize: '1rem',
+                                fontWeight: 'bold',
+                                fontFamily: 'Cinzel, serif',
+                                textShadow: '0 0 8px rgba(232, 244, 253, 0.3)'
+                              }}>
+                                {originalIndex + 1}
+                              </span>
+                            </div>
+                          )}
                           {originalIndex < horizontalRevealedRunes ? (
                             <>
                               <span className="rune-symbol" style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>{rune.symbol}</span>
