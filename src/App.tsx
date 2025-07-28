@@ -715,13 +715,13 @@ function App() {
             
             <p className="rune-meaning" style={{ marginBottom: '2rem', textAlign: 'center' }}>
               <strong>Bindrunes</strong> are combinations of two or more runes merged into a single symbol. 
-              They were used to create powerful magical symbols that combined the meanings and energies of multiple runes.
+              They are used to create powerful magical symbols that combine the meanings and powers of multiple runes.
             </p>
             
             <div style={{ marginBottom: '2rem' }}>
               <h3 style={{ color: '#e8f4fd', marginBottom: '1rem' }}>How Bindrunes Work</h3>
               <p className="rune-meaning">
-                When creating a bindrune, runes are overlapped and shared lines are combined. 
+                When creating a bindrune, runes are overlapped, and shared lines are combined. 
                 This creates a unified symbol that represents the combined intent and power of the individual runes. 
                 The most common bindrunes combine 2-3 runes, though more complex combinations exist.
               </p>
@@ -737,7 +737,7 @@ function App() {
             </div>
             
             <div style={{ marginBottom: '2rem' }}>
-              <h3 style={{ color: '#e8f4fd', marginBottom: '1rem' }}>Common Bindrune Examples</h3>
+              <h3 style={{ color: '#e8f4fd', marginBottom: '1rem' }}>Simple Bindrune Examples</h3>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', marginTop: '1rem' }}>
                 <div style={{ textAlign: 'center', padding: '1.5rem', background: 'linear-gradient(145deg, #2a2a2a, #1a1a1a)', borderRadius: '12px', border: '2px solid #3a3a3a' }}>
                   <img 
@@ -762,7 +762,7 @@ function App() {
                   <p style={{ fontSize: '0.9rem', color: '#b8d4e6', marginBottom: '0.5rem' }}>Protection + Journey</p>
                   <p style={{ fontSize: '0.85rem', color: '#a0aec0', fontStyle: 'italic' }}>
                     This bindrune combines the protective power of Thurisaz with the guidance of Raidho. 
-                    It's often used for safe travels and protection during journeys, both physical and spiritual.
+                    It can be used for safe travels and protection during journeys, both physical and spiritual.
                   </p>
                 </div>
                 
@@ -798,16 +798,16 @@ function App() {
             <div style={{ marginBottom: '2rem' }}>
               <h3 style={{ color: '#e8f4fd', marginBottom: '1rem' }}>Using Bindrunes</h3>
               <p className="rune-meaning">
-                Bindrunes can be carved into wood, stone, or metal, drawn on paper, or visualized in meditation. 
-                They are often used for protection, healing, guidance, or to manifest specific intentions. 
+                Bindrunes can be carved into wood, stone, or metal, drawn on paper, or visualized, and shaped in countless other forms.
+                They can be used for protection, correction of life paths, guidance, or to pursue specific intentions. 
                 The power of a bindrune comes from the focused intention and the harmonious combination of runic energies.
               </p>
             </div>
             
             <div style={{ textAlign: 'center', marginTop: '2rem' }}>
               <p className="rune-meaning" style={{ fontStyle: 'italic', opacity: 0.8 }}>
-                "When runes are bound together, their power multiplies. 
-                Choose wisely, for the bindrune becomes a living symbol of your intent."
+                When runes are bound together, their power multiplies. 
+                Choose wisely, for the bindrune becomes a living symbol of your intent.
               </p>
             </div>
           </div>
@@ -919,7 +919,7 @@ function App() {
               <p className="rune-meaning">
                 All 24 runes of the Elder Futhark can be found within the Web of Wyrd. When we study the runes, 
                 we are actually reading the patterns of wyrd itself. The runes are not separate from the Web - 
-                they are the Web, expressed in symbolic form.
+                they are part of the Web, expressed in symbolic form.
               </p>
               <p className="rune-meaning">
                 When you draw runes or work with them, you are connecting directly to the threads of wyrd. 
@@ -934,15 +934,15 @@ function App() {
               <p className="rune-meaning">
                 To work with wyrd is to understand that we are both weavers and threads in the great tapestry. 
                 We can learn to read the patterns, make conscious choices, and take responsibility for our actions. 
-                By honoring the past, being mindful in the present, and shaping the future with wisdom, 
+                By honoring the past, being attentive in the present, and shaping the future with wisdom, 
                 we become active participants in the weaving of our own destiny.
               </p>
             </div>
             
             <div style={{ textAlign: 'center', marginTop: '2rem' }}>
               <p className="rune-meaning" style={{ fontStyle: 'italic', opacity: 0.8 }}>
-                "The threads of wyrd are woven by our choices, 
-                and every moment is a chance to change the pattern."
+                The threads of wyrd are woven by our choices, 
+                and every moment is a chance to change the pattern.
               </p>
             </div>
           </div>
@@ -967,7 +967,7 @@ function App() {
             With a final cry, Odin seized the runes, gaining their knowledge and the ability to shape destiny. He brought the runes back to the worlds, teaching them to gods, elves, and humankind. Thus, the runes became the language of magic, poetry, and prophecy, a bridge between the seen and unseen.
           </p>
           <p style={{ marginTop: '2rem', color: '#b8d4e6', fontStyle: 'italic', textAlign: 'center' }}>
-            "From the Well of Urd, from the roots of Yggdrasil, the runes came forth—gifts of sacrifice, wisdom, and fate."
+            From the Well of Urd, from the roots of Yggdrasil, the runes came forth—gifts of sacrifice, wisdom, and fate.
           </p>
         </div>
       )}
