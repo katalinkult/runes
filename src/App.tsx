@@ -157,8 +157,10 @@ function App() {
     setSelectedLookupRune(null);
     // Close mobile menu if open
     setIsMobileMenuOpen(false);
-    // Scroll to top for all tabs
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Scroll to top for all tabs with a small delay to ensure menu closes first
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
   };
 
   const handleRuneClick = (rune: Rune) => {
