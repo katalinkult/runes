@@ -1256,8 +1256,8 @@ function App() {
               onClick={closeEnlargedImage}
               style={{
                 position: 'absolute',
-                top: '-45px',
-                right: '0',
+                top: '-30px',
+                right: '-30px',
                 background: 'rgba(232, 244, 253, 0.1)',
                 border: '1px solid rgba(232, 244, 253, 0.3)',
                 borderRadius: '50%',
