@@ -1362,7 +1362,7 @@ function App() {
             justifyContent: 'center',
             zIndex: 2000,
             backdropFilter: 'blur(5px)',
-            padding: '20px'
+            padding: '80px 20px 80px 20px'
           }}
           onClick={closeEnlargedImage}
         >
