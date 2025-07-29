@@ -5,7 +5,7 @@ A modern, beautifully crafted web application for exploring the Elder Futhark ru
 ## Features
 
 - **Rune Dictionary**: Complete reference of all 24 Elder Futhark runes with their symbols, names, meanings, and detailed descriptions
-- **Daily Rune**: Pull a random rune for guidance and reflection
+- **Random Runes**: Pull random runes for guidance and reflection
 - **Modern UI**: Beautiful, responsive design with smooth animations and intuitive navigation
 - **Mobile Friendly**: Optimized for all device sizes
 
