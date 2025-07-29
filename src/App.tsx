@@ -23,21 +23,30 @@ function App() {
   
   // Add state for mobile menu
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
 
   const runeDrawingContainerRef = useRef<HTMLDivElement>(null);
   const singleRuneResultRef = useRef<HTMLDivElement>(null);
   const multipleRunesResultRef = useRef<HTMLDivElement>(null);
 
-  // Effect to track window size
+  // Effect to track window size and scroll position
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 700);
     };
     
+    const handleScroll = () => {
+      setShowScrollToTop(window.scrollY > 100);
+    };
+    
     checkMobile();
     window.addEventListener('resize', checkMobile);
+    window.addEventListener('scroll', handleScroll);
     
-    return () => window.removeEventListener('resize', checkMobile);
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   // Helper function to get runes in mobile-first order
@@ -487,42 +496,44 @@ function App() {
             ))}
           </div>
           
-          <button
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            style={{
-              position: 'fixed',
-              bottom: '2rem',
-              right: '2rem',
-              background: 'linear-gradient(145deg, #2a2a2a, #1a1a1a)',
-              border: '2px solid #3a3a3a',
-              borderRadius: '50%',
-              width: '60px',
-              height: '60px',
-              color: '#e8f4fd',
-              fontSize: '1.5rem',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
-              zIndex: 1000,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'linear-gradient(145deg, #3a3a3a, #2a2a2a)';
-              e.currentTarget.style.borderColor = '#4a5568';
-              e.currentTarget.style.transform = 'translateY(-2px)';
-              e.currentTarget.style.boxShadow = '0 6px 16px rgba(0, 0, 0, 0.4), 0 0 15px rgba(232, 244, 253, 0.2)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'linear-gradient(145deg, #2a2a2a, #1a1a1a)';
-              e.currentTarget.style.borderColor = '#3a3a3a';
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.3)';
-            }}
-          >
-            ↑
-          </button>
+          {showScrollToTop && (
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              style={{
+                position: 'fixed',
+                bottom: '2rem',
+                right: '2rem',
+                background: 'linear-gradient(145deg, #2a2a2a, #1a1a1a)',
+                border: '2px solid #3a3a3a',
+                borderRadius: '50%',
+                width: '60px',
+                height: '60px',
+                color: '#e8f4fd',
+                fontSize: '1.5rem',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+                zIndex: 1000,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'linear-gradient(145deg, #3a3a3a, #2a2a2a)';
+                e.currentTarget.style.borderColor = '#4a5568';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 6px 16px rgba(0, 0, 0, 0.4), 0 0 15px rgba(232, 244, 253, 0.2)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'linear-gradient(145deg, #2a2a2a, #1a1a1a)';
+                e.currentTarget.style.borderColor = '#3a3a3a';
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.3)';
+              }}
+            >
+              ↑
+            </button>
+          )}
         </div>
       )}
 
