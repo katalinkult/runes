@@ -1,11 +1,11 @@
 # Elder Futhark Runes App
 
-A beautiful, modern web application for exploring the ancient Elder Futhark runes. Discover the wisdom of the 24 runes that guided the Norse people through their meanings, symbols, and daily guidance.
+A beautiful, modern web application for exploring the ancient Elder Futhark runes: the 24 runes that guided the Norse people through their meanings, symbols, and daily guidance.
 
 ## Features
 
 - **Rune Dictionary**: Complete reference of all 24 Elder Futhark runes with their symbols, names, meanings, and detailed descriptions
-- **Daily Rune**: Pull a random rune for daily guidance and reflection
+- **Daily Rune**: Pull a random rune for guidance and reflection
 - **Modern UI**: Beautiful, responsive design with smooth animations and intuitive navigation
 - **Mobile Friendly**: Optimized for all device sizes
 
